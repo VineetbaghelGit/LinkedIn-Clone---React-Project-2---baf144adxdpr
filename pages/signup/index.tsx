@@ -13,14 +13,15 @@ import Link from 'next/link'
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-
-function LoginPage(): React.JSX.Element {
+function SignupPage(): React.JSX.Element {
   const loginValidation = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
     },
     validationSchema: Yup.object().shape({
+      name: Yup.string().required('Name is required'),
       email: Yup.string().required('Email is required'),
       password: Yup.string().required('Password is required'),
     }),
@@ -54,7 +55,7 @@ function LoginPage(): React.JSX.Element {
                 color: 'rgba(0,0,0,0.9)',
                 padding: '0 0 4px 0',
               }}>
-              Sign in
+              Sign up
             </Typography>
             <Typography
               component="p"
@@ -64,7 +65,7 @@ function LoginPage(): React.JSX.Element {
                 color: 'rgba(0,0,0,0.9)',
                 margin: '4px 0px',
               }}>
-              Stay updated on your professional world
+              Make the most of your professional life
             </Typography>
           </Stack>
           <Box
@@ -79,6 +80,29 @@ function LoginPage(): React.JSX.Element {
             <FormControl
               sx={{
                 marginTop: '24px',
+                marginBottom: '0px',
+              }}>
+              <InputTextField
+                id="name"
+                name="name"
+                label="Name"
+                type="text"
+                value={loginValidation.values.name}
+                onChange={loginValidation.handleChange}
+                onBlur={loginValidation.handleBlur}
+                error={
+                  (loginValidation.touched.name ?? false) &&
+                  Boolean(loginValidation.errors.name)
+                }
+                helperText={
+                  (loginValidation.touched.name ?? false) &&
+                  loginValidation.errors.name
+                }
+              />
+            </FormControl>
+            <FormControl
+              sx={{
+                marginTop: '10px',
                 marginBottom: '0px',
               }}>
               <InputTextField
@@ -131,10 +155,11 @@ function LoginPage(): React.JSX.Element {
                   position: 'relative',
                   left: '9px',
                 }}>
+                Already on LinkedIn?
                 <Link
-                  href="/forgot-password"
+                  href="/login"
                   style={{color: '#0073b1', textDecoration: 'none'}}>
-                  Forgot Password?
+                  &nbsp;Sign in
                 </Link>
               </Typography>
             </FormControl>
@@ -153,27 +178,9 @@ function LoginPage(): React.JSX.Element {
                     background: '#004182',
                   },
                 }}>
-                Sign in
+                Sign up
               </Button>
             </Stack>
-            <Typography
-              sx={{
-                fontSize: '15px',
-                lineHeight: '1.25',
-                color: 'rgba(0,0,0,0.9)',
-                marginTop: '8px',
-                fontWeight: '500',
-                position: 'relative',
-                left: '9px',
-                textAlign: 'center',
-              }}>
-              New to LinkdeIn?
-              <Link
-                href="/signup"
-                style={{color: '#0073b1', textDecoration: 'none'}}>
-                &nbsp;Signup
-              </Link>
-            </Typography>
           </Box>
         </Container>
       </Box>
@@ -181,4 +188,4 @@ function LoginPage(): React.JSX.Element {
   )
 }
 
-export default LoginPage
+export default SignupPage
