@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
 import GuestHeader from '@/components/shared/GuestHeader'
