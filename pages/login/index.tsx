@@ -13,6 +13,7 @@ import Link from 'next/link'
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import GuestLayout from '@/components/layouts/GuestLayout'
 
 function LoginPage(): React.JSX.Element {
   const loginValidation = useFormik({
@@ -30,7 +31,7 @@ function LoginPage(): React.JSX.Element {
     },
   })
   return (
-    <>
+    <GuestLayout>
       <GuestHeader />
       <Box sx={{display: 'flex', justifyContent: 'center', margin: '0 auto'}}>
         <Container
@@ -177,7 +178,7 @@ function LoginPage(): React.JSX.Element {
           </Box>
         </Container>
       </Box>
-    </>
+    </GuestLayout>
   )
 }
 

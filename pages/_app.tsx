@@ -2,6 +2,8 @@ import '@/components/styles/globals.css'
 import type {AppProps} from 'next/app'
 import React from 'react'
 import {Poppins} from 'next/font/google'
+import {Provider} from 'react-redux'
+import {store} from '../store/store'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -14,7 +16,9 @@ export default function App({
 }: AppProps): React.JSX.Element {
   return (
     <main className={`${poppins.className}`}>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </main>
   )
 }

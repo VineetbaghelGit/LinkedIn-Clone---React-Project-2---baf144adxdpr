@@ -4,11 +4,14 @@
     "es2021": true
   },
   "extends": [
-    "next",
     "next/core-web-vitals",
     "plugin:react/recommended",
     "standard-with-typescript",
     "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
     "google"
   ],
   "parser": "@typescript-eslint/parser",
@@ -20,21 +23,34 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "unused-imports"],
   "rules": {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-shadow": "error",
     "object-curly-spacing": ["off", "always"],
     "@typescript-eslint/triple-slash-reference": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "unused-imports/no-unused-imports": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "semi": "off",
-    "prettier/prettier": ["error", {"semi": false, "endOfLine": "auto"}],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+     "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "require-jsdoc": "off",
     "react/no-unescaped-entities": 0,
-    "unused-imports/no-unused-vars": "off",
     "linebreak-style": "off"
   }
 }
