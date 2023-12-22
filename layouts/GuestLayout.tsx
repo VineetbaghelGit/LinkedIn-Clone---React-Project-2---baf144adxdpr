@@ -9,7 +9,6 @@ function GuestLayout({
   children,
 }: Readonly<GuestLayoutProps>): React.JSX.Element {
   const isUserLoggedIn: boolean = IsUserAuthenticated()
-  console.log('isUserLoggedIn', isUserLoggedIn)
   const router = useRouter()
   useEffect(() => {
     if (isUserLoggedIn) {

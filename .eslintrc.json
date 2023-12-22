@@ -4,6 +4,7 @@
     "es2021": true
   },
   "extends": [
+    "next",
     "next/core-web-vitals",
     "plugin:react/recommended",
     "standard-with-typescript",
@@ -40,6 +41,7 @@
         "endOfLine": "auto"
       }
     ],
+    "react/no-unescaped-entities": 0,
      "unused-imports/no-unused-vars": [
       "warn",
       {
@@ -50,7 +52,6 @@
       }
     ],
     "require-jsdoc": "off",
-    "react/no-unescaped-entities": 0,
     "linebreak-style": "off"
   }
 }
