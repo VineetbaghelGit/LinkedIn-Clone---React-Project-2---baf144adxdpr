@@ -1,14 +1,15 @@
 import React, {type ChangeEventHandler, type InputHTMLAttributes} from 'react'
 import TextField from '@mui/material/TextField'
 
-export interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  id: string
-  label: string
-  type: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
-  error: boolean
-  helperText: any
+export interface InputFieldProps
+  extends Readonly<InputHTMLAttributes<HTMLInputElement>> {
+  readonly id: string
+  readonly label: string
+  readonly type: string
+  readonly onChange?: ChangeEventHandler<HTMLInputElement>
+  readonly onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
+  readonly error: boolean
+  readonly helperText: any
 }
 function InputTextField({
   id,
