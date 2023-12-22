@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
 import GuestHeader from '@/components/shared/GuestHeader'
 import {
@@ -14,21 +15,29 @@ import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import GuestLayout from '@/components/layouts/GuestLayout'
+import ApiUtils from '@/components/api/ApiUtils'
+import {ToasterMessage} from '@/components/helpers/ToastMessage'
 function SignupPage(): React.JSX.Element {
-  const loginValidation = useFormik({
+  const signupValidation = useFormik({
     initialValues: {
       name: '',
       email: '',
       password: '',
+      appType: 'linkedin',
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required('Name is required'),
       email: Yup.string().required('Email is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: async () => {
-      // try {
-      // } catch (error: any) {}
+    onSubmit: async values => {
+      try {
+        await ApiUtils.authSignup(values)
+        ToasterMessage('success', 'Signup Successfully')
+        signupValidation.resetForm()
+      } catch (err: any) {
+        ToasterMessage('error', err?.response?.data?.message)
+      }
     },
   })
   return (
@@ -76,7 +85,7 @@ function SignupPage(): React.JSX.Element {
             }}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault()
-              loginValidation.handleSubmit()
+              signupValidation.handleSubmit()
             }}>
             <FormControl
               sx={{
@@ -88,16 +97,16 @@ function SignupPage(): React.JSX.Element {
                 name="name"
                 label="Name"
                 type="text"
-                value={loginValidation.values.name}
-                onChange={loginValidation.handleChange}
-                onBlur={loginValidation.handleBlur}
+                value={signupValidation.values.name}
+                onChange={signupValidation.handleChange}
+                onBlur={signupValidation.handleBlur}
                 error={
-                  (loginValidation.touched.name ?? false) &&
-                  Boolean(loginValidation.errors.name)
+                  (signupValidation.touched.name ?? false) &&
+                  Boolean(signupValidation.errors.name)
                 }
                 helperText={
-                  (loginValidation.touched.name ?? false) &&
-                  loginValidation.errors.name
+                  (signupValidation.touched.name ?? false) &&
+                  signupValidation.errors.name
                 }
               />
             </FormControl>
@@ -111,16 +120,16 @@ function SignupPage(): React.JSX.Element {
                 name="email"
                 label="Email"
                 type="email"
-                value={loginValidation.values.email}
-                onChange={loginValidation.handleChange}
-                onBlur={loginValidation.handleBlur}
+                value={signupValidation.values.email}
+                onChange={signupValidation.handleChange}
+                onBlur={signupValidation.handleBlur}
                 error={
-                  (loginValidation.touched.email ?? false) &&
-                  Boolean(loginValidation.errors.email)
+                  (signupValidation.touched.email ?? false) &&
+                  Boolean(signupValidation.errors.email)
                 }
                 helperText={
-                  (loginValidation.touched.email ?? false) &&
-                  loginValidation.errors.email
+                  (signupValidation.touched.email ?? false) &&
+                  signupValidation.errors.email
                 }
               />
             </FormControl>
@@ -134,16 +143,16 @@ function SignupPage(): React.JSX.Element {
                 name="password"
                 label="Password"
                 type="password"
-                value={loginValidation.values.password}
-                onChange={loginValidation.handleChange}
-                onBlur={loginValidation.handleBlur}
+                value={signupValidation.values.password}
+                onChange={signupValidation.handleChange}
+                onBlur={signupValidation.handleBlur}
                 error={
-                  (loginValidation.touched.password ?? false) &&
-                  Boolean(loginValidation.errors.password)
+                  (signupValidation.touched.password ?? false) &&
+                  Boolean(signupValidation.errors.password)
                 }
                 helperText={
-                  (loginValidation.touched.password ?? false) &&
-                  loginValidation.errors.password
+                  (signupValidation.touched.password ?? false) &&
+                  signupValidation.errors.password
                 }
               />
               <Typography

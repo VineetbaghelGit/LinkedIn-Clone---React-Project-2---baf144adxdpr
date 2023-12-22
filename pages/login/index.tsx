@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
 import GuestHeader from '@/components/shared/GuestHeader'
 import {
@@ -14,20 +15,35 @@ import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import GuestLayout from '@/components/layouts/GuestLayout'
+import ApiUtils from '@/components/api/ApiUtils'
+import {setCookie} from 'cookies-next'
+import {USER_TOKEN} from '@/components/utils/AppConfig'
+import {useAppDispatch} from '@/components/store/hooks'
+import {setLoginToken} from '@/components/store/slices/auth/reducer'
+import {ToasterMessage} from '@/components/helpers/ToastMessage'
 
 function LoginPage(): React.JSX.Element {
+  const dispatch = useAppDispatch()
   const loginValidation = useFormik({
     initialValues: {
       email: '',
       password: '',
+      appType: 'linkedin',
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().required('Email is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: async () => {
-      // try {
-      // } catch (error: any) {}
+    onSubmit: async value => {
+      try {
+        const response: any = await ApiUtils.authLogin(value)
+        setCookie(USER_TOKEN, JSON.stringify(response?.token))
+        dispatch(setLoginToken(response?.token))
+        ToasterMessage('success', 'Login Successfully')
+        loginValidation.resetForm()
+      } catch (err: any) {
+        ToasterMessage('error', err?.response?.data?.message)
+      }
     },
   })
   return (
