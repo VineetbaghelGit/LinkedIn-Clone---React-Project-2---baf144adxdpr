@@ -1,3 +1,5 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-param-reassign */
 import axios from 'axios'
