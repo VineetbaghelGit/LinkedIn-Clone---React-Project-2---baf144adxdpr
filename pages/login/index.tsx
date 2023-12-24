@@ -1,7 +1,6 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
-import GuestHeader from '@/components/shared/GuestHeader'
 import {
   Box,
   Container,
@@ -49,7 +48,6 @@ function LoginPage(): React.JSX.Element {
   })
   return (
     <GuestLayout>
-      <GuestHeader />
       <Box sx={{display: 'flex', justifyContent: 'center', margin: '0 auto'}}>
         <Container
           sx={{

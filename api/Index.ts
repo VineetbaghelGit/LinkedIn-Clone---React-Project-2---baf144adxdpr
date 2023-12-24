@@ -6,14 +6,14 @@
 import axios from 'axios'
 import {getCookie} from 'cookies-next'
 
-import {BASE_URL, USER_TOKEN} from '../utils/AppConfig'
+import {BASE_URL, PROJECT_ID, USER_TOKEN} from '../utils/AppConfig'
 
 const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
-    projectID: 'hv45l4abtvvc',
+    projectID: PROJECT_ID,
   },
 })
 
