@@ -1,6 +1,7 @@
 import {useRouter} from 'next/navigation'
 import React, {useEffect} from 'react'
 import {IsUserAuthenticated} from '../utils/SelectorConfig'
+import AuthHeader from '../shared/AuthHeader'
 
 interface AuthLayoutProps {
   children: React.ReactNode
@@ -14,7 +15,12 @@ function AuthLayout({children}: Readonly<AuthLayoutProps>): React.JSX.Element {
       router.push('/login')
     }
   }, [isUserLoggedIn, router])
-  return <div>{children}</div>
+  return (
+    <div>
+      <AuthHeader />
+      {children}
+    </div>
+  )
 }
 
 export default AuthLayout

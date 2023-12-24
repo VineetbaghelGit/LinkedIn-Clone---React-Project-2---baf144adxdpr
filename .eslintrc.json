@@ -35,6 +35,7 @@
     "unused-imports/no-unused-imports": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-misused-promises": "off",
+     "@stylistic/js/quote-props": "off",
     "prettier/prettier": [
       "error",
       {
