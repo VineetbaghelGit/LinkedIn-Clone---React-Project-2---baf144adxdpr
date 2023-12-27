@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
 import {Box, Button} from '@mui/material'
 import Image from 'next/image'
