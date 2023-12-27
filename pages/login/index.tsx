@@ -11,6 +11,8 @@ import {
 } from '@mui/material'
 import React from 'react'
 import Link from 'next/link'
+import {useRouter} from 'next/navigation'
+
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
@@ -23,6 +25,7 @@ import {setLoginToken} from '@/components/store/slices/auth/reducer'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 
 function LoginPage(): React.JSX.Element {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const loginValidation = useFormik({
     initialValues: {
@@ -39,6 +42,7 @@ function LoginPage(): React.JSX.Element {
         const response: any = await ApiUtils.authLogin(value)
         setCookie(USER_TOKEN, JSON.stringify(response?.token))
         dispatch(setLoginToken(response?.token))
+        router.push('/')
         ToasterMessage('success', 'Login Successfully')
         loginValidation.resetForm()
       } catch (err: any) {

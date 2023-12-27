@@ -2,6 +2,7 @@ import {useRouter} from 'next/navigation'
 import React, {useEffect} from 'react'
 import {IsUserAuthenticated} from '../utils/SelectorConfig'
 import AuthHeader from '../shared/AuthHeader'
+import {Box} from '@mui/material'
 
 interface AuthLayoutProps {
   children: React.ReactNode
@@ -18,7 +19,7 @@ function AuthLayout({children}: Readonly<AuthLayoutProps>): React.JSX.Element {
   return (
     <div>
       <AuthHeader />
-      {children}
+      <Box sx={{paddingTop: '80px'}}>{children}</Box>
     </div>
   )
 }
