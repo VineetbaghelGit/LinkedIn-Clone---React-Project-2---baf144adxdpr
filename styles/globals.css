@@ -125,3 +125,13 @@ ul li .profile-image {
   font-size: 12px;
   text-decoration: none;
 }
+.create_post_modal .css-ikyfcv{
+  padding: 18px 21px!important
+}
+.EmojiPickerReact.epr-main{
+  height: 330px !important;
+    width: 350px !important;
+    position: absolute !important;
+    top: 70px;
+    left: -124px;
+}
