@@ -8,7 +8,18 @@ import ProfileImage from '../../../images/linkedin_profile.jpg'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import ArticleIcon from '@mui/icons-material/Article'
+import ShareBoxModal from './ShareBoxModal'
+
 function ShareBoxFeed(): React.JSX.Element {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
+  }
+
   return (
     <Box
       className="avatar"
@@ -25,6 +36,7 @@ function ShareBoxFeed(): React.JSX.Element {
           </Box>
         </Link>
         <Box
+          onClick={handleOpen}
           component="button"
           sx={{
             margin: '.4rem 0',
@@ -81,6 +93,7 @@ function ShareBoxFeed(): React.JSX.Element {
           <span>Write Article</span>
         </Button>
       </Box>
+      <ShareBoxModal open={open} onClose={handleClose} />
     </Box>
   )
 }
