@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField'
 
 export interface InputFieldProps
   extends Readonly<InputHTMLAttributes<HTMLInputElement>> {
-  readonly id: string
   readonly label: string
   readonly type: string
   readonly onChange?: ChangeEventHandler<HTMLInputElement>
@@ -12,7 +11,6 @@ export interface InputFieldProps
   readonly helperText: any
 }
 function InputTextField({
-  id,
   label,
   name,
   type,
