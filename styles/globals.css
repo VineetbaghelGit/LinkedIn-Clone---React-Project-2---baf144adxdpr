@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f4f2ee;
+}
+.css-hip9hq-MuiPaper-root-MuiAppBar-root {
+  background-color: #fff;
+  box-shadow: none;
+}
+.guest_header .css-hip9hq-MuiPaper-root-MuiAppBar-root {
+  background-color: #f4f2ee;
+}
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid rgb(140 140 140/0.2);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+.global_header {
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  min-height: 100%;
+  width: 1128px;
+}
+.global_header .css-96uuyl {
+  margin-left: 9px;
+}
+.global_header .search_icon-header svg {
+  color: rgb(0 0 0/0.9);
+}
+.global_header .MuiInputBase-colorPrimary {
+  border-radius: 0.4rem;
+  background-color: #edf3f8;
+}
+.global_header .css-yz9k0d-MuiInputBase-input {
+  width: 100%;
+  line-height: 1.75;
+  font-weight: 400;
+  font-size: 14px;
+  height: 34px;
+  color: rgb(0 0 0/0.9);
+  padding: 3px 40px;
+}
+.css-1iz4iln svg path {
+  color: #edf3f8 !important;
+}
+.header_icon {
+  display: flex;
+  flex-direction: column;
+}
+.header_icon h5 {
+  color: rgb(0 0 0/0.6);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.header_icon svg path {
+  color: #666666 !important;
+  font-size: 16px;
+}
+.header_more_icon svg path {
+  color: #666666 !important;
+}
+.header_dropdown .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  top: 70px !important;
+  border: 4px;
+}
+.header_icon:hover {
+  background-color: transparent !important;
+}
+.header_icon:hover h5,
+.header_icon:hover svg path {
+  color: #000 !important;
+}
+ul li .profile-image {
+  border-radius: 50%;
+}
+.css-to4x1n-MuiBadge-badge {
+  top: 4px;
+  font-size: 10px;
+  padding: 0 5px;
+}
+@media (max-width: 1167px) {
+  .global_header {
+    width: 100%;
+  }
+}
+/* main page css */
+/* aside  */
+.bg_linkedin_main {
+  background-image: url(../images/linkedin_banner.jpg);
+  background-position: center;
+  background-size: cover;
+  display: block;
+  height: 56.25px;
+  margin: -1.2rem -1.2rem 0;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+}
+.member_photo {
+  border-radius: 50%;
+  margin: -38px auto 1.2rem;
+  border: 2px solid #fff;
+  background-color: #fff;
+}
+/* main feed */
+.border_radius-50 img {
+  border-radius: 50%;
+}
+.toolbar_wrapper button span {
+  margin-left: 0.8rem;
+  color: rgb(0 0 0/0.6);
+  text-transform: capitalize;
+}
+.toolbar_wrapper_post button span{
+   margin-left: 0.3rem;
+  color: rgb(0 0 0/0.6);
+  text-transform: capitalize;
+}
+.content_feed_name a {
+  font-size: 12px;
+  text-decoration: none;
+}
