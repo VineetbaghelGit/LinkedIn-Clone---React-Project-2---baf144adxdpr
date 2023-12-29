@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthLayout from '../layouts/AuthLayout'
+import AuthLayout from '../appLayouts/AuthLayout'
 import {Box, Container, Grid} from '@mui/material'
 import LeftAside from './components/LeftAside/LeftAside'
 import MainFeed from './components/MainFeed/MainFeed'
