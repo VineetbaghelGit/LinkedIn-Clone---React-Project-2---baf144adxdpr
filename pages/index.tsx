@@ -10,17 +10,17 @@ function PageHome(): React.JSX.Element {
       <Container>
         <Box sx={{margin: '0px 30px'}}>
           <Grid container={true}>
-            <Grid item={true} md={3}>
+            <Grid item={true} xs={12} sm={4} md={3}>
               <Box sx={{padding: '0px 10px'}}>
                 <LeftAside />
               </Box>
             </Grid>
-            <Grid item={true} md={6}>
+            <Grid item={true} xs={12} sm={8} md={6}>
               <Box sx={{padding: '0px 10px'}}>
                 <MainFeed />
               </Box>
             </Grid>
-            <Grid item={true} md={3}>
+            <Grid item={true} sm={3} md={3}>
               <Box sx={{padding: '0px 10px'}}>Hello</Box>
             </Grid>
           </Grid>
