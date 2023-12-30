@@ -14,8 +14,8 @@ import Link from 'next/link'
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import GuestLayout from '@/components/layouts/GuestLayout'
-import ApiUtils from '@/components/api/ApiUtils'
+import GuestLayout from '@/components/appLayouts/GuestLayout'
+import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 function SignupPage(): React.JSX.Element {
   const signupValidation = useFormik({

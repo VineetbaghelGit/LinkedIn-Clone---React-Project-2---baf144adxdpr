@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background-color: #f4f2ee;
 }
@@ -125,7 +126,7 @@ ul li .profile-image {
   font-size: 12px;
   text-decoration: none;
 }
-.create_post_modal .css-ikyfcv{
+.create_post_modal .css-fzumoh{
   padding: 18px 21px!important
 }
 .EmojiPickerReact.epr-main{
@@ -135,3 +136,39 @@ ul li .profile-image {
     top: 70px;
     left: -124px;
 }
+.image-preview {
+  position: relative;
+  margin-bottom: 20px;
+}
+.image-preview:hover img {
+  opacity: 0.4;
+  cursor: pointer;
+}
+.image-preview:hover span {
+  display: block;
+  cursor: pointer;
+}
+
+.remove-preview-img {
+  position: absolute;
+  display: none;
+  top: -4px;
+  right: 2px;
+  opacity: 1 !important;
+}
+@media(max-width: 767px){
+  .css-h2sb3d{
+    margin: 0px;
+  }
+  .css-1oqqzyl-MuiContainer-root{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .css-fzumoh{
+    width: 90vw;
+  }
+}
+@media(max-width: 992px){
+.EmojiPickerReact.epr-main{
+  left: 0px;
+}}
