@@ -1,9 +1,10 @@
-/* eslint-disable indent */
-/* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
-import {Box, Button, TextField} from '@mui/material'
+/* eslint-disable max-len */
+/* eslint-disable quote-props */
+/* eslint-disable quotes */
+import {Box, Button, Divider, TextField} from '@mui/material'
 import Image from 'next/image'
-import React, {useEffect, useRef, useState} from 'react'
+import React, {type ChangeEvent, useEffect, useRef, useState} from 'react'
 import ProfileImage from '../../../images/linkedin_profile.jpg'
 import Modal from '@mui/material/Modal'
 import Popover from '@mui/material/Popover'
@@ -12,18 +13,20 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import Typography from '@mui/material/Typography'
 import {type EmojiClickData} from 'emoji-picker-react'
 import EmojiPicker from 'emoji-picker-react'
-
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import CloseIcon from '@mui/icons-material/Close'
 const style = {
   position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
+  width: 620,
   bgcolor: 'background.paper',
   boxShadow: 24,
   borderRadius: '0.8rem',
   p: 4,
-  height: '85vh',
+  height: '90vh',
   ':focus-visible': {
     outline: 'none',
   },
@@ -38,6 +41,9 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+
   const emojiRef = useRef<HTMLDivElement | null>(null)
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>): void => {
@@ -72,6 +78,45 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const files = event.target.files
+
+    if (files != null) {
+      const imageFiles = Array.from(files).filter(file =>
+        file.type.startsWith('image/'),
+      )
+
+      setSelectedFiles(prevFiles => [...prevFiles, ...imageFiles])
+      const newFiles = Array.from(imageFiles)?.map(async file => {
+        const reader = new FileReader()
+
+        return await new Promise<string>(resolve => {
+          reader.onload = () => {
+            resolve(reader.result as string)
+          }
+          reader.readAsDataURL(file)
+        })
+      })
+
+      void Promise.all(newFiles).then(filePreviews => {
+        const newImagePreviews = filePreviews.filter(
+          file => typeof file === 'string',
+        )
+
+        setImagePreviews(prevImagePreviews => [
+          ...prevImagePreviews,
+          ...newImagePreviews,
+        ])
+      })
+    }
+  }
+
+  const removeFile = (index: number): void => {
+    setSelectedFiles(prevFiles => prevFiles.filter((_, i) => i !== index))
+    setImagePreviews(prevImagePreviews =>
+      prevImagePreviews.filter((_, i) => i !== index),
+    )
+  }
   return (
     <Modal
       className="create_post_modal"
@@ -143,7 +188,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
             <TextField
               variant="standard"
               multiline
-              rows={12}
+              rows={selectedFiles.length > 0 ? 6 : 9}
               value={inputValue}
               InputProps={{
                 disableUnderline: true,
@@ -154,6 +199,40 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
               fullWidth
               placeholder="What do you want to talk about?"
             />
+            <Divider light={true} sx={{my: '8px'}} />
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '10px',
+                maxHeight: '90px',
+                overflow: 'auto',
+              }}>
+              {imagePreviews?.map((filePreview, index) => (
+                <div
+                  key={crypto.randomUUID()}
+                  className={`mb-2 image-preview ${
+                    index % 6 === 2 ? 'w-1/6' : 'w-full md:w-1/6'
+                  }`}>
+                  <Image
+                    src={filePreview}
+                    alt={`Image Preview ${index + 1}`}
+                    width={80}
+                    height={80}
+                  />
+
+                  <Box component="span" className="remove-preview-img">
+                    <CloseIcon
+                      onClick={() => {
+                        removeFile(index)
+                      }}
+                      sx={{fontSize: '1.01rem'}}
+                    />
+                  </Box>
+                </div>
+              ))}
+            </Box>
           </Box>
           <Box className="share_text_editor" sx={{margin: '0.7rem 1rem'}}>
             <Button
@@ -197,6 +276,121 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
                 />
               </div>
             )}
+          </Box>
+          <Box className="share_text_editor" sx={{margin: '0.7rem 0.2rem'}}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+              <Box sx={{marginRight: '14px'}}>
+                <label htmlFor="upload" className="cursor-pointer">
+                  <Box
+                    component="span"
+                    sx={{
+                      borderRadius: '50%',
+                      padding: '0.7rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      background: '#f4f2ee',
+                      ':hover': {
+                        boxShadow:
+                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        cursor: 'pointer',
+                      },
+                    }}>
+                    <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                  </Box>
+                </label>
+                <input
+                  id="upload"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  style={{display: 'none'}}
+                  onChange={handleFileChange}
+                />
+              </Box>
+              <Box sx={{marginRight: '14px'}}>
+                <label htmlFor="upload" className="cursor-pointer">
+                  <Box
+                    component="span"
+                    sx={{
+                      borderRadius: '50%',
+                      padding: '0.7rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      background: '#f4f2ee',
+                      ':hover': {
+                        boxShadow:
+                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        cursor: 'pointer',
+                      },
+                    }}>
+                    <CalendarMonthIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                  </Box>
+                </label>
+                <input
+                  id="upload"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  style={{display: 'none'}}
+                  onChange={handleFileChange}
+                />
+              </Box>
+              <Box sx={{marginRight: '14px'}}>
+                <label htmlFor="upload" className="cursor-pointer">
+                  <Box
+                    component="span"
+                    sx={{
+                      borderRadius: '50%',
+                      padding: '0.7rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      background: '#f4f2ee',
+                      ':hover': {
+                        boxShadow:
+                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        cursor: 'pointer',
+                      },
+                    }}>
+                    <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                  </Box>
+                </label>
+                <input
+                  id="upload"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  style={{display: 'none'}}
+                  onChange={handleFileChange}
+                />
+              </Box>
+            </Box>
+          </Box>
+          <Divider light={true} sx={{my: '10px'}} />
+          <Box
+            sx={{
+              marginTop: '7px',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}>
+            <Button
+              variant="contained"
+              sx={{
+                height: '35px',
+                overflow: 'hidden',
+                padding: '0 18px',
+                borderRadius: '28px',
+                background: '#0a66c2',
+                ':hover': {
+                  background: '#004182',
+                },
+              }}>
+              Post
+            </Button>
           </Box>
         </Box>
       </Box>
