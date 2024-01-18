@@ -47,6 +47,17 @@ const ApiUtils = {
       endpoint: apiEndpoints.SIGNUP,
       data: params,
     }),
+  createPost: async (params: any) =>
+    await genericApiCall({
+      method: 'POST',
+      endpoint: apiEndpoints.LINKEDIN_POST,
+      data: params,
+    }),
+  getPosts: async () =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: apiEndpoints.LINKEDIN_POST,
+    }),
 }
 
 export default ApiUtils
