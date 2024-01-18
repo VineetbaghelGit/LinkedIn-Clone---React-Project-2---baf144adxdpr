@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
