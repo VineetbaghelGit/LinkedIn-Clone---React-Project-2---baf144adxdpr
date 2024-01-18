@@ -19,6 +19,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: any) => {
+    if (config?.url === '/linkedin/post') {
+      config.headers['Content-Type'] = 'multipart/form-data'
+    } else {
+      config.headers['Content-Type'] = 'application/json'
+    }
     const userTokenCookie =
       (getCookie(USER_TOKEN) ?? '') !== ''
         ? JSON.parse(getCookie(USER_TOKEN) as string)
