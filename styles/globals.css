@@ -8,11 +8,12 @@ body {
   background-color: #f4f2ee;
 }
 .css-hip9hq-MuiPaper-root-MuiAppBar-root {
-  background-color: #fff;
+  background-color: transparent;
   box-shadow: none;
 }
-.guest_header .css-hip9hq-MuiPaper-root-MuiAppBar-root {
-  background-color: #f4f2ee;
+.guest_header .css-1x7skt0 {
+  background-color: #f4f2ee !important;
+  box-shadow: none;
 }
 .header {
   background-color: #fff;
@@ -20,6 +21,10 @@ body {
   position: fixed;
   width: 100%;
   z-index: 1000;
+}
+.global_header .css-1x7skt0{
+  box-shadow: none !important;
+  background-color: #fff !important;
 }
 .global_header {
   align-items: center;
@@ -38,14 +43,14 @@ body {
   border-radius: 0.4rem;
   background-color: #edf3f8;
 }
-.global_header .css-yz9k0d-MuiInputBase-input {
+.global_header .MuiInputBase-input {
   width: 100%;
   line-height: 1.75;
   font-weight: 400;
   font-size: 14px;
   height: 34px;
   color: rgb(0 0 0/0.9);
-  padding: 3px 40px;
+  padding: 3px 30px !important;
 }
 .css-1iz4iln svg path {
   color: #edf3f8 !important;
@@ -66,7 +71,7 @@ body {
 .header_more_icon svg path {
   color: #666666 !important;
 }
-.header_dropdown .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+.header_dropdown .css-pwxzbm {
   top: 70px !important;
   border: 4px;
 }
@@ -158,17 +163,17 @@ ul li .profile-image {
 }
 @media(max-width: 767px){
   .css-h2sb3d{
-    margin: 0px;
+    margin: 0px !important;
   }
-  .css-1oqqzyl-MuiContainer-root{
-    padding-left: 0px;
-    padding-right: 0px;
+  .css-1qsxih2{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
   .css-fzumoh{
-    width: 90vw;
+    width: 90vw !important;
   }
 }
 @media(max-width: 992px){
 .EmojiPickerReact.epr-main{
-  left: 0px;
+  left: 0px !important;
 }}

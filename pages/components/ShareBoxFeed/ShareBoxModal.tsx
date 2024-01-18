@@ -1,3 +1,5 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 /* eslint-disable max-len */
 /* eslint-disable quote-props */
@@ -16,6 +18,8 @@ import EmojiPicker from 'emoji-picker-react'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import CloseIcon from '@mui/icons-material/Close'
+import ApiUtils from '@/components/apis/ApiUtils'
+import {ToasterMessage} from '@/components/helpers/ToastMessage'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -116,6 +120,26 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
     setImagePreviews(prevImagePreviews =>
       prevImagePreviews.filter((_, i) => i !== index),
     )
+  }
+  const handleCreatePost = async (): Promise<void> => {
+    if (inputValue != null) {
+      try {
+        const formData = new FormData()
+        selectedFiles.forEach(file => {
+          formData.append(`images`, file)
+        })
+        formData.append('title', 'Title3')
+        formData.append('content', inputValue)
+        const response: any = await ApiUtils.createPost(formData)
+        ToasterMessage('success', response?.message)
+        onClose()
+        setInputValue('')
+        setSelectedFiles([])
+        setImagePreviews([])
+      } catch (err: any) {
+        ToasterMessage('error', err.response.data.message)
+      }
+    }
   }
   return (
     <Modal
@@ -378,7 +402,9 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
               justifyContent: 'flex-end',
             }}>
             <Button
+              disabled={!(inputValue.length > 0)}
               variant="contained"
+              onClick={handleCreatePost}
               sx={{
                 height: '35px',
                 overflow: 'hidden',
