@@ -77,7 +77,7 @@ function ContentFeed(): React.JSX.Element {
                         src={content?.author?.profileImage ?? ProfileImage}
                         height={48}
                         width={48}
-                        alt="user_profile_img"
+                        alt="user_profile"
                       />
                     </Box>
                     <Box
