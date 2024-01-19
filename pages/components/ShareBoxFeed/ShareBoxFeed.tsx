@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
 import {Box, Button} from '@mui/material'
@@ -9,8 +10,11 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import ArticleIcon from '@mui/icons-material/Article'
 import ShareBoxModal from './ShareBoxModal'
-
-function ShareBoxFeed(): React.JSX.Element {
+import {type PostTypes} from '@/components/utils/TypeConfig'
+interface ShareBoxFeedProps {
+  readonly setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
+}
+function ShareBoxFeed({setFeedContent}: ShareBoxFeedProps): React.JSX.Element {
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = (): void => {
@@ -21,9 +25,7 @@ function ShareBoxFeed(): React.JSX.Element {
   }
 
   return (
-    <Box
-      className="avatar"
-      sx={{margin: '0 0 .8rem', background: '#fff', borderRadius: '0.4rem'}}>
+    <Box className="avatar" sx={{margin: '0 0 .8rem', background: '#fff', borderRadius: '0.4rem'}}>
       <Box
         sx={{
           padding: '.8rem 1.6rem 0',
@@ -93,7 +95,7 @@ function ShareBoxFeed(): React.JSX.Element {
           <span>Write Article</span>
         </Button>
       </Box>
-      <ShareBoxModal open={open} onClose={handleClose} />
+      <ShareBoxModal open={open} onClose={handleClose} setFeedContent={setFeedContent} />
     </Box>
   )
 }

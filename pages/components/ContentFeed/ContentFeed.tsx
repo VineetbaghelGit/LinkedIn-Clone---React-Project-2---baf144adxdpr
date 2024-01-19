@@ -1,9 +1,11 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable max-len */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
-import {Box, Button} from '@mui/material'
-import React, {useEffect, useState} from 'react'
+import {Box, Button, Typography} from '@mui/material'
+import React, {useState} from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import Image from 'next/image'
 import ProfileImage from '../../../images/linkedin_profile.jpg'
@@ -12,26 +14,27 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import CommentIcon from '@mui/icons-material/Comment'
 import SendIcon from '@mui/icons-material/Send'
 import ReplyAllIcon from '@mui/icons-material/ReplyAll'
-import ApiUtils from '@/components/apis/ApiUtils'
 import {formatRelativeTime} from '@/components/helpers/TimeFomat'
-function ContentFeed(): React.JSX.Element {
-  const [feedContent, setFeedContent] = useState([])
-  useEffect(() => {
-    void fetchPosts()
-  }, [])
-  async function fetchPosts(): Promise<void> {
-    try {
-      const response: any = await ApiUtils.getPosts()
-      console.log('🚀 ~ fetchPosts ~ response:', response)
-      setFeedContent(response.data)
-    } catch (err) {
-      console.log('🚀 ~ fetchPosts ~ err:', err)
-    }
+import {type PostTypes} from '@/components/utils/TypeConfig'
+import ImageCarousel from './ImageCarousel'
+interface PostProps {
+  readonly feedContent: PostTypes[]
+}
+
+function ContentFeed({feedContent}: PostProps): React.JSX.Element {
+  const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
+    {},
+  )
+
+  const handleShowMoreToggle = (contentId: string): void => {
+    setShowMoreStates(prev => ({...prev, [contentId]: !prev[contentId]}))
   }
   return (
     <>
-      {feedContent.length > 0
-        ? feedContent.map((content: any) => {
+      {feedContent?.length > 0
+        ? feedContent?.map((content: any) => {
+            const showMore = showMoreStates[content._id] || false
+
             return (
               <Box
                 key={content._id}
@@ -148,8 +151,37 @@ function ContentFeed(): React.JSX.Element {
                         fontSize: '13px',
                       }}
                       component="span">
-                      {content?.content}
+                      {showMore
+                        ? content?.content
+                        : `${content?.content
+                            .split(' ')
+                            .slice(0, 15)
+                            .join(' ')}${
+                            content?.content.split(' ').length > 15
+                              ? ' ...'
+                              : ''
+                          }`}
+                      {content?.content.length > 120 && (
+                        <Typography
+                          component="p"
+                          sx={{
+                            float: 'right',
+                            fontSize: '12px',
+                            cursor: 'pointer',
+                            color: '#ACACAC',
+                            mt: '17px',
+                            mb: '8px',
+                          }}
+                          onClick={() => {
+                            handleShowMoreToggle(content._id)
+                          }}>
+                          {showMore ? '...see less' : '...see more'}
+                        </Typography>
+                      )}
                     </Box>
+                    {content?.images?.length > 0 && (
+                      <ImageCarousel content={content.images} />
+                    )}
                   </Box>
                 </Box>
                 <Box
@@ -213,4 +245,4 @@ function ContentFeed(): React.JSX.Element {
   )
 }
 
-export default ContentFeed
+export default React.memo(ContentFeed)
