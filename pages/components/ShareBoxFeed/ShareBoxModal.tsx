@@ -20,6 +20,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import CloseIcon from '@mui/icons-material/Close'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
+import {type PostTypes} from '@/components/utils/TypeConfig'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -39,9 +40,9 @@ const style = {
 interface ShareModalProps {
   open: boolean
   onClose: () => void
+  setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
 }
-
-const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
+const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose, setFeedContent}) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
@@ -61,18 +62,12 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
     setShowEmojiPicker(!showEmojiPicker)
   }
   function handleInputField(emojiData: EmojiClickData): void {
-    setInputValue(
-      (data: any) =>
-        data + (emojiData.isCustom ? emojiData.unified : emojiData.emoji),
-    )
+    setInputValue((data: any) => data + (emojiData.isCustom ? emojiData.unified : emojiData.emoji))
     setShowEmojiPicker(false)
   }
   const openPopover = Boolean(anchorEl)
   const handleClickOutside = (event: MouseEvent): void => {
-    if (
-      emojiRef.current != null &&
-      !emojiRef.current?.contains(event.target as Node)
-    ) {
+    if (emojiRef.current != null && !emojiRef.current?.contains(event.target as Node)) {
       setShowEmojiPicker(false)
     }
   }
@@ -86,9 +81,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
     const files = event.target.files
 
     if (files != null) {
-      const imageFiles = Array.from(files).filter(file =>
-        file.type.startsWith('image/'),
-      )
+      const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'))
 
       setSelectedFiles(prevFiles => [...prevFiles, ...imageFiles])
       const newFiles = Array.from(imageFiles)?.map(async file => {
@@ -103,23 +96,16 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
       })
 
       void Promise.all(newFiles).then(filePreviews => {
-        const newImagePreviews = filePreviews.filter(
-          file => typeof file === 'string',
-        )
+        const newImagePreviews = filePreviews.filter(file => typeof file === 'string')
 
-        setImagePreviews(prevImagePreviews => [
-          ...prevImagePreviews,
-          ...newImagePreviews,
-        ])
+        setImagePreviews(prevImagePreviews => [...prevImagePreviews, ...newImagePreviews])
       })
     }
   }
 
   const removeFile = (index: number): void => {
     setSelectedFiles(prevFiles => prevFiles.filter((_, i) => i !== index))
-    setImagePreviews(prevImagePreviews =>
-      prevImagePreviews.filter((_, i) => i !== index),
-    )
+    setImagePreviews(prevImagePreviews => prevImagePreviews.filter((_, i) => i !== index))
   }
   const handleCreatePost = async (): Promise<void> => {
     if (inputValue != null) {
@@ -131,6 +117,8 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
         formData.append('title', 'Title3')
         formData.append('content', inputValue)
         const response: any = await ApiUtils.createPost(formData)
+        const getPostResponse: any = await ApiUtils.getPosts()
+        setFeedContent(getPostResponse.data)
         ToasterMessage('success', response?.message)
         onClose()
         setInputValue('')
@@ -166,12 +154,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
                 },
               }}>
               <Box className="border_radius-50">
-                <Image
-                  src={ProfileImage}
-                  height={48}
-                  width={48}
-                  alt="user_profile"
-                />
+                <Image src={ProfileImage} height={48} width={48} alt="user_profile" />
               </Box>
               <Box
                 sx={{
@@ -236,9 +219,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
               {imagePreviews?.map((filePreview, index) => (
                 <div
                   key={crypto.randomUUID()}
-                  className={`mb-2 image-preview ${
-                    index % 6 === 2 ? 'w-1/6' : 'w-full md:w-1/6'
-                  }`}>
+                  className={`mb-2 image-preview ${index % 6 === 2 ? 'w-1/6' : 'w-full md:w-1/6'}`}>
                   <Image
                     src={filePreview}
                     alt={`Image Preview ${index + 1}`}
@@ -286,9 +267,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
               onClose={handlePopoverClose}
               disableRestoreFocus>
               {!showEmojiPicker && (
-                <Typography sx={{p: 0.7, fontSize: '12px'}}>
-                  Open emoji keyword
-                </Typography>
+                <Typography sx={{p: 0.7, fontSize: '12px'}}>Open emoji keyword</Typography>
               )}
             </Popover>
             {showEmojiPicker && (
@@ -319,8 +298,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
                       alignItems: 'center',
                       background: '#f4f2ee',
                       ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        boxShadow: '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
                         cursor: 'pointer',
                       },
                     }}>
@@ -347,8 +325,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
                       alignItems: 'center',
                       background: '#f4f2ee',
                       ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        boxShadow: '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
                         cursor: 'pointer',
                       },
                     }}>
@@ -375,8 +352,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({open, onClose}) => {
                       alignItems: 'center',
                       background: '#f4f2ee',
                       ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                        boxShadow: '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
                         cursor: 'pointer',
                       },
                     }}>
