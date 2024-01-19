@@ -9,7 +9,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
-    
+      {
+        protocol: "https",
+        hostname: "newton-project-resume-backend.s3.ap-south-1.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "loremflickr.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };
