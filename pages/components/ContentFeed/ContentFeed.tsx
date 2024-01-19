@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable max-len */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
