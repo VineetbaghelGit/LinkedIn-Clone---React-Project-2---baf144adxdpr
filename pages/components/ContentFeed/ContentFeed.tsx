@@ -22,15 +22,17 @@ interface PostProps {
 }
 
 function ContentFeed({feedContent}: PostProps): React.JSX.Element {
-  const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>({})
+  const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
+    {},
+  )
 
   const handleShowMoreToggle = (contentId: string): void => {
     setShowMoreStates(prev => ({...prev, [contentId]: !prev[contentId]}))
   }
   return (
     <>
-      {feedContent.length > 0
-        ? feedContent.map((content: any) => {
+      {feedContent?.length > 0
+        ? feedContent?.map((content: any) => {
             const showMore = showMoreStates[content._id] || false
 
             return (
@@ -151,8 +153,13 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                       component="span">
                       {showMore
                         ? content?.content
-                        : `${content?.content.split(' ').slice(0, 15).join(' ')}${
-                            content?.content.split(' ').length > 15 ? ' ...' : ''
+                        : `${content?.content
+                            .split(' ')
+                            .slice(0, 15)
+                            .join(' ')}${
+                            content?.content.split(' ').length > 15
+                              ? ' ...'
+                              : ''
                           }`}
                       {content?.content.length > 120 && (
                         <Typography
@@ -172,7 +179,9 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                         </Typography>
                       )}
                     </Box>
-                    {content?.images?.length > 0 && <ImageCarousel content={content.images} />}
+                    {content?.images?.length > 0 && (
+                      <ImageCarousel content={content.images} />
+                    )}
                   </Box>
                 </Box>
                 <Box
