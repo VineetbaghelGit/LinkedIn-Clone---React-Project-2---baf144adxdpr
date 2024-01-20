@@ -1,4 +1,10 @@
-import {type Theme, toast, type ToastPosition} from 'react-toastify'
+import {
+  type Theme,
+  toast,
+  type ToastPosition,
+  type ToastTransition,
+  Slide,
+} from 'react-toastify'
 
 interface ToastOptions {
   position: ToastPosition
@@ -9,16 +15,18 @@ interface ToastOptions {
   draggable: boolean
   progress?: number
   theme: Theme
+  transition: ToastTransition
 }
 
 const defaultToastOptions: ToastOptions = {
-  position: 'top-right',
   autoClose: 1500,
-  hideProgressBar: false,
   closeOnClick: true,
-  pauseOnHover: true,
   draggable: true,
+  position: 'bottom-left',
+  hideProgressBar: true,
+  pauseOnHover: false,
   theme: 'light',
+  transition: Slide,
 }
 function ToasterMessage(type: string, message: string): void {
   switch (type) {

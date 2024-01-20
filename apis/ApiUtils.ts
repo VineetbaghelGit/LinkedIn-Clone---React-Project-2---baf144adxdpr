@@ -53,10 +53,10 @@ const ApiUtils = {
       endpoint: apiEndpoints.LINKEDIN_POST,
       data: params,
     }),
-  getPosts: async () =>
+  getPosts: async (params: string) =>
     await genericApiCall({
       method: 'GET',
-      endpoint: apiEndpoints.LINKEDIN_POST,
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
     }),
 }
 
