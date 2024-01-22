@@ -21,7 +21,7 @@ import logoLinkedin from '@/components/images/LinkedIn_icon.svg.png'
 import ProfileImage from '@/components/images/linkedin_profile.jpg'
 import {Home, Message, People, Work} from '@mui/icons-material'
 import {Button, Divider} from '@mui/material'
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import {useAppDispatch} from '@/components/store/hooks'
 import {removeLoginToken} from '@/components/store/slices/auth/reducer'
 import {deleteCookie} from 'cookies-next'
@@ -171,27 +171,18 @@ export default function AuthHeader(): React.JSX.Element {
         Account
       </Typography>
       <Typography sx={{fontSize: '14px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Settings & Privacy
         </Link>
       </Typography>
       <Typography sx={{fontSize: '14px', marginTop: '6px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Help
         </Link>
       </Typography>
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Language
         </Link>
       </Typography>
@@ -210,27 +201,18 @@ export default function AuthHeader(): React.JSX.Element {
         Manage
       </Typography>
       <Typography sx={{fontSize: '14px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Posts & Activity
         </Link>
       </Typography>
       <Typography sx={{fontSize: '14px', marginTop: '6px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Company
         </Link>
       </Typography>
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
-        <Link
-          href="#"
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px'}}>
+        <Link href="#" className="dropdown-menu">
           Company
         </Link>
       </Typography>
@@ -238,12 +220,12 @@ export default function AuthHeader(): React.JSX.Element {
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
         <Link
+          href="#"
+          className="dropdown-menu"
           onClick={() => {
             dispatch(removeLoginToken())
             deleteCookie(USER_TOKEN)
-          }}
-          underline="hover"
-          sx={{color: 'gray', marginLeft: '16px', cursor: 'pointer'}}>
+          }}>
           Sign out
         </Link>
       </Typography>
@@ -334,14 +316,16 @@ export default function AuthHeader(): React.JSX.Element {
             </Search>
             <Box sx={{flexGrow: 1}} />
             <Box sx={{display: {xs: 'none', md: 'flex', gap: '13px'}}}>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                className="header_icon"
-                color="inherit">
-                <Home />
-                <Typography variant="h5">Home</Typography>
-              </IconButton>
+              <Link href="/">
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  className="header_icon"
+                  color="inherit">
+                  <Home />
+                  <Typography variant="h5">Home</Typography>
+                </IconButton>
+              </Link>
               <IconButton
                 size="large"
                 aria-label="show 4 new mails"

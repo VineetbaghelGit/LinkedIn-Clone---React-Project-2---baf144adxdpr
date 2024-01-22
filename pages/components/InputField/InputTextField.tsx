@@ -8,7 +8,11 @@ export interface InputFieldProps
   readonly onChange?: ChangeEventHandler<HTMLInputElement>
   readonly onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
   readonly error: boolean
-  readonly helperText: any
+  readonly helperText?: any
+  readonly size?: any
+  readonly fullWidth?: any
+  readonly multiline?: any
+  readonly maxRows?: any
 }
 function InputTextField({
   label,
@@ -19,6 +23,10 @@ function InputTextField({
   onBlur,
   error,
   helperText,
+  size,
+  fullWidth,
+  multiline,
+  maxRows,
 }: InputFieldProps): React.JSX.Element {
   return (
     <TextField
@@ -31,6 +39,10 @@ function InputTextField({
       onBlur={onBlur}
       error={error}
       helperText={helperText}
+      size={size}
+      fullWidth={fullWidth}
+      multiline={multiline}
+      maxRows={maxRows}
       sx={{
         lineHeight: '1.33333',
         fontWeight: '400',
