@@ -58,6 +58,22 @@ const ApiUtils = {
       method: 'GET',
       endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
     }),
+  createGroup: async (params: any) =>
+    await genericApiCall({
+      method: 'POST',
+      endpoint: apiEndpoints.LINKEDIN_CHANNEL,
+      data: params,
+    }),
+  getGroupsList: async () =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: `${apiEndpoints.LINKEDIN_CHANNEL}`,
+    }),
+  deleteGroup: async (params: string) =>
+    await genericApiCall({
+      method: 'DELETE',
+      endpoint: `${apiEndpoints.LINKEDIN_CHANNEL}${params}`,
+    }),
 }
 
 export default ApiUtils

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable quote-props */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
@@ -19,7 +20,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: any) => {
-    if (config?.url === '/linkedin/post') {
+    if (
+      config?.url === '/linkedin/post' ||
+      config?.url === '/linkedin/channel'
+    ) {
       config.headers['Content-Type'] = 'multipart/form-data'
     } else {
       config.headers['Content-Type'] = 'application/json'
