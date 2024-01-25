@@ -15,3 +15,14 @@ export interface PostTypes {
   title: string
   _id: string
 }
+export interface CommentsDataTypes {
+  _id: string
+  content: string
+  author: string
+  children: Comment[]
+  createdAt: string
+  isEdited: boolean
+  parentComment: string | null
+  post: string
+  __v: number
+}

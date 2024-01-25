@@ -17,23 +17,65 @@ import ReplyAllIcon from '@mui/icons-material/ReplyAll'
 import {formatRelativeTime} from '@/components/helpers/TimeFomat'
 import {type PostTypes} from '@/components/utils/TypeConfig'
 import ImageCarousel from './ImageCarousel'
+import ApiUtils from '@/components/apis/ApiUtils'
+import {ToasterMessage} from '@/components/helpers/ToastMessage'
+import CommentBox from './CommentBox'
 interface PostProps {
   readonly feedContent: PostTypes[]
+  setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
+  index: number
 }
 
-function ContentFeed({feedContent}: PostProps): React.JSX.Element {
+function ContentFeed({
+  feedContent,
+  setFeedContent,
+  index,
+}: Readonly<PostProps>): React.JSX.Element {
   const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
     {},
   )
+  const [showCommentsStates, setShowCommentsStates] = useState<
+    Record<string, boolean>
+  >({})
 
   const handleShowMoreToggle = (contentId: string): void => {
     setShowMoreStates(prev => ({...prev, [contentId]: !prev[contentId]}))
   }
+  const handleShowComments = (contentId: string): void => {
+    setShowCommentsStates(prev => ({...prev, [contentId]: !prev[contentId]}))
+  }
+
+  const handleUpvotePost = async (postId: string): Promise<void> => {
+    try {
+      const response: any = await ApiUtils.upvotePost(`/${postId}`)
+      ToasterMessage('success', response?.message)
+      const getPostResponse: any = await ApiUtils.getPosts(
+        `?limit=10&page=${index}`,
+      )
+      setFeedContent(prevItems => [...prevItems, ...getPostResponse.data])
+    } catch (err: any) {
+      ToasterMessage('error', err?.response?.data.message)
+    }
+  }
+  const handleDeletePost = async (postId: string): Promise<void> => {
+    try {
+      await ApiUtils.deletePost(`/${postId}`)
+      ToasterMessage('success', 'Post deleted successfully')
+      const getPostResponse: any = await ApiUtils.getPosts(
+        `?limit=10&page=${index - 1}`,
+      )
+      setFeedContent(prevItems => [...prevItems, ...getPostResponse.data])
+    } catch (err: any) {
+      ToasterMessage('error', err?.response?.data.message)
+    }
+  }
+
   return (
     <>
       {feedContent?.length > 0
         ? feedContent?.map((content: any) => {
             const showMore = showMoreStates[content._id] || false
+            const showComments = showCommentsStates[content._id] || false
 
             return (
               <Box
@@ -59,7 +101,12 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                   <Box component="span" sx={{fontSize: '14px'}}>
                     heloo
                   </Box>
-                  <CloseIcon sx={{fontSize: '16px', cursor: 'pointer'}} />
+                  <CloseIcon
+                    sx={{fontSize: '16px', cursor: 'pointer'}}
+                    onClick={async () => {
+                      await handleDeletePost(content?._id)
+                    }}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -183,7 +230,49 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                       <ImageCarousel content={content.images} />
                     )}
                   </Box>
+                  <Box
+                    component="div"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      mb: '10px',
+                    }}>
+                    <Box
+                      component="span"
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px',
+                      }}>
+                      <ThumbUpOffAltIcon
+                        sx={{color: '#5E5E5E', fontSize: '16px'}}
+                      />
+                      <Typography
+                        component="span"
+                        sx={{color: '#5E5E5E', fontSize: '12px'}}>
+                        {content?.likeCount}
+                      </Typography>
+                    </Box>
+
+                    <Typography
+                      component="a"
+                      onClick={() => {
+                        handleShowComments(content._id)
+                      }}
+                      sx={{
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        color: '#ACACAC',
+                        '&:hover': {
+                          color: '#1976D2',
+                          textDecoration: 'underline',
+                        },
+                      }}>
+                      {content?.commentCount} comments
+                    </Typography>
+                  </Box>
                 </Box>
+
                 <Box
                   sx={{
                     minHeight: '40px',
@@ -197,6 +286,9 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                   }}
                   className="toolbar_wrapper_post">
                   <Button
+                    onClick={async () => {
+                      await handleUpvotePost(content?._id)
+                    }}
                     sx={{
                       padding: '13px 15px',
                       ':hover': {
@@ -237,6 +329,7 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
                     <span>Send</span>
                   </Button>
                 </Box>
+                {showComments && <CommentBox contentId={content?._id} />}
               </Box>
             )
           })
@@ -245,4 +338,4 @@ function ContentFeed({feedContent}: PostProps): React.JSX.Element {
   )
 }
 
-export default React.memo(ContentFeed)
+export default ContentFeed

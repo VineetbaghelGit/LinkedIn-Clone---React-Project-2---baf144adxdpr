@@ -6,7 +6,7 @@ import api from './Index'
 
 // Define the structure of an API Call
 interface ApiCall {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method: 'GET' | 'POST' | 'PATCH' | 'DELETE'
   endpoint: string
   data?: any
   params?: any
@@ -58,6 +58,11 @@ const ApiUtils = {
       method: 'GET',
       endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
     }),
+  deletePost: async (params: string) =>
+    await genericApiCall({
+      method: 'DELETE',
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
+    }),
   createGroup: async (params: any) =>
     await genericApiCall({
       method: 'POST',
@@ -73,6 +78,33 @@ const ApiUtils = {
     await genericApiCall({
       method: 'DELETE',
       endpoint: `${apiEndpoints.LINKEDIN_CHANNEL}${params}`,
+    }),
+  upvotePost: async (params: string) =>
+    await genericApiCall({
+      method: 'POST',
+      endpoint: `${apiEndpoints.LINKEDIN_LIKE}${params}`,
+    }),
+  getPostComments: async (params: string) =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
+    }),
+  postComment: async (params: any, postId: string) =>
+    await genericApiCall({
+      method: 'POST',
+      endpoint: `${apiEndpoints.LINKEDIN_COMMENT}/${postId}`,
+      data: params,
+    }),
+  deleteComment: async (params: string) =>
+    await genericApiCall({
+      method: 'DELETE',
+      endpoint: `${apiEndpoints.LINKEDIN_COMMENT}${params}`,
+    }),
+  updateComment: async (params: any, commentId: string) =>
+    await genericApiCall({
+      method: 'PATCH',
+      endpoint: `${apiEndpoints.LINKEDIN_COMMENT}/${commentId}`,
+      data: params,
     }),
 }
 

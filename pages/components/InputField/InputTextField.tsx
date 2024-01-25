@@ -6,13 +6,15 @@ export interface InputFieldProps
   readonly label: string
   readonly type: string
   readonly onChange?: ChangeEventHandler<HTMLInputElement>
-  readonly onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
-  readonly error: boolean
+  readonly onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  readonly error?: boolean
   readonly helperText?: any
   readonly size?: any
   readonly fullWidth?: any
   readonly multiline?: any
   readonly maxRows?: any
+  readonly className?: any
+  readonly ref?: any
 }
 function InputTextField({
   label,
@@ -27,9 +29,13 @@ function InputTextField({
   fullWidth,
   multiline,
   maxRows,
+  className,
+  ref,
 }: InputFieldProps): React.JSX.Element {
   return (
     <TextField
+      ref={ref}
+      className={className}
       id={name}
       name={name}
       label={label}
