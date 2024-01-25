@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable max-len */
 /* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
