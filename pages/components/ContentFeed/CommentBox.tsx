@@ -27,7 +27,7 @@ function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
   const [currentCommentId, setCurrentCommentId] = useState('')
   const inputRef = useRef<HTMLInputElement | null>(null)
   const userId: string = LoggedInUserId()
-  const currentLoggedInUserId = userId.slice(1, -1)
+  const currentLoggedInUserId = userId?.slice(1, -1)
 
   async function fetchCommentsForPost(id: string): Promise<void> {
     try {
@@ -40,8 +40,8 @@ function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
         },
       )
       setUserComments(sortedComments)
-    } catch (err) {
-      console.log('🚀 ~ fetchCommentsForPost ~ err:', err)
+    } catch (err: any) {
+      ToasterMessage('error', err?.response?.data.message)
     }
   }
   async function handlePostComment(): Promise<void> {
