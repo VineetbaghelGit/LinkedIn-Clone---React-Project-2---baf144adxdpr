@@ -5,4 +5,5 @@ export const apiEndpoints = {
   LINKEDIN_CHANNEL: '/linkedin/channel',
   LINKEDIN_COMMENT: '/linkedin/comment',
   LINKEDIN_LIKE: '/linkedin/like',
+  LINKEDIN_USER: '/linkedin/user',
 }

@@ -67,6 +67,7 @@ function SearchBox({
   useEffect(() => {
     if (!openBackdrop) {
       setSearchedData([])
+      setSearchInputValue('')
     }
   }, [openBackdrop])
   useEffect(() => {
