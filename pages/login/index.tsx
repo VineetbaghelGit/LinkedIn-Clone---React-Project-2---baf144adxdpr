@@ -19,10 +19,11 @@ import * as Yup from 'yup'
 import GuestLayout from '@/components/appLayouts/GuestLayout'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {setCookie} from 'cookies-next'
-import {USER_TOKEN} from '@/components/utils/AppConfig'
+import {USER_ID, USER_TOKEN} from '@/components/utils/AppConfig'
 import {useAppDispatch} from '@/components/store/hooks'
 import {setLoginToken} from '@/components/store/slices/auth/reducer'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
+import {setLoggedInUserId} from '@/components/store/slices/user/reducer'
 
 function LoginPage(): React.JSX.Element {
   const router = useRouter()
@@ -41,7 +42,9 @@ function LoginPage(): React.JSX.Element {
       try {
         const response: any = await ApiUtils.authLogin(value)
         setCookie(USER_TOKEN, JSON.stringify(response?.token))
+        setCookie(USER_ID, JSON.stringify(response?.data?._id))
         dispatch(setLoginToken(response?.token))
+        dispatch(setLoggedInUserId(response?.data?._id))
         router.push('/')
         ToasterMessage('success', 'Login Successfully')
         loginValidation.resetForm()
