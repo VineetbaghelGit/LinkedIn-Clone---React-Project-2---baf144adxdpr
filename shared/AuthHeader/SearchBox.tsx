@@ -117,7 +117,7 @@ function SearchBox({
             padding: '10px 13px',
           }}>
           {searchedData.length > 0 ? (
-            searchedData.map(data => {
+            searchedData.map((data: PostTypes) => {
               return (
                 <Box
                   key={data?._id}
