@@ -23,10 +23,11 @@ function ImageCarousel({content}: ImageCarouselProps): React.JSX.Element {
               src={img}
               onDragStart={handleDragStart}
               alt="img"
+              height={400}
+              width={500}
               layout="responsive"
-              objectFit="cover"
-              height={100}
-              width={100}
+              priority
+              style={{objectFit: 'contain'}}
             />
           </div>
         ))}

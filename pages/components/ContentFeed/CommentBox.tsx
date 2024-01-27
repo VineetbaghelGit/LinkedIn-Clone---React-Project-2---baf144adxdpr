@@ -20,11 +20,13 @@ interface CommentBoxProps {
   contentId: string
 }
 
-function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
+function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
   const [userComments, setUserComments] = useState<CommentsDataTypes[]>([])
   const [commentInputValue, setCommentInputValue] = useState('')
   const [commentEditMode, setCommentEditMode] = useState(false)
   const [currentCommentId, setCurrentCommentId] = useState('')
+  const [numberOfDisplayComment, setNumberOfDisplayComment] =
+    useState<number>(5)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const userId: string = LoggedInUserId()
   const currentLoggedInUserId = userId?.slice(1, -1)
@@ -83,6 +85,9 @@ function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
       inputRef.current.focus()
     }
   }
+  const handleLoadMore = (): void => {
+    setNumberOfDisplayComment(prv => prv + 5)
+  }
   useEffect(() => {
     void fetchCommentsForPost(contentId)
   }, [contentId])
@@ -138,95 +143,112 @@ function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
           Post{' '}
         </Button>
       )}
-      {userComments.length > 0 &&
-        userComments.map(data => {
-          return (
-            <Box
-              key={data?._id}
-              sx={{
-                flexWrap: 'nowrap',
-                marginBottom: '0.8rem',
-                marginTop: '0.8rem',
-                display: 'flex',
-                alignItems: 'center',
-              }}>
+      <Box sx={{maxHeight: '300px', overflowY: 'auto', mt: '10px'}}>
+        {userComments.length > 0 &&
+          userComments.slice(0, numberOfDisplayComment).map(data => {
+            return (
               <Box
+                key={data?._id}
                 sx={{
+                  flexWrap: 'nowrap',
+                  marginBottom: '0.8rem',
+                  marginTop: '0.8rem',
                   display: 'flex',
-                  overflow: 'hidden',
-                  width: '100%',
+                  alignItems: 'center',
                 }}>
-                <Box className="border_radius-50">
-                  <Image
-                    src={ProfileImage}
-                    height={35}
-                    width={35}
-                    alt="user_profile"
-                  />
-                </Box>
                 <Box
-                  className="content_feed_name"
                   sx={{
-                    flex: '1',
                     display: 'flex',
-                    marginLeft: '0.8rem',
                     overflow: 'hidden',
-                    background: '#F2F2F2',
-                    padding: '0.3rem 0.6rem',
-                    justifyContent: 'space-between',
+                    width: '100%',
                   }}>
-                  <Box>
-                    <Link href="/profile">
-                      <Box
-                        component="span"
-                        sx={{
-                          display: 'flex',
-                          color: 'rgb(0 0 0/0.8)',
-                          fontWeight: '550',
-                          fontSize: '13px',
-                        }}>
-                        {/* {content?.author?.name} */}
-                        Vineet Baghel
-                      </Box>
-                      <Box
-                        component="p"
-                        sx={{
-                          display: 'block',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          color: 'rgb(0 0 0/.6)',
-                          whiteSpace: 'nowrap',
-                          fontSize: '11px',
-                        }}>
-                        Sr Test Automation Engineer at Accolite Digital
-                      </Box>
-                      <Box
-                        component="span"
-                        sx={{
-                          display: 'block',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          color: 'rgb(0 0 0/.6)',
-                          whiteSpace: 'nowrap',
-                        }}>
-                        {formatRelativeTime(data?.createdAt)}
-                      </Box>
-                    </Link>
-                    <Typography
-                      component="span"
-                      sx={{fontSize: '13px', color: '#000'}}>
-                      {data?.content}
-                    </Typography>
+                  <Box className="border_radius-50">
+                    <Image
+                      src={ProfileImage}
+                      height={35}
+                      width={35}
+                      alt="user_profile"
+                    />
                   </Box>
-                  <Box>
-                    {data?.author === currentLoggedInUserId && (
-                      <EditIcon
-                        onClick={() => {
-                          handleEditComment(data?._id, data?.content)
+                  <Box
+                    className="content_feed_name"
+                    sx={{
+                      flex: '1',
+                      display: 'flex',
+                      marginLeft: '0.8rem',
+                      overflow: 'hidden',
+                      background: '#F2F2F2',
+                      padding: '0.3rem 0.6rem',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Box>
+                      <Link href="/profile">
+                        <Box
+                          component="span"
+                          sx={{
+                            display: 'flex',
+                            color: 'rgb(0 0 0/0.8)',
+                            fontWeight: '550',
+                            fontSize: '13px',
+                          }}>
+                          {/* {content?.author?.name} */}
+                          Vineet Baghel
+                        </Box>
+                        <Box
+                          component="p"
+                          sx={{
+                            display: 'block',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            color: 'rgb(0 0 0/.6)',
+                            whiteSpace: 'nowrap',
+                            fontSize: '11px',
+                          }}>
+                          Sr Test Automation Engineer at Accolite Digital
+                        </Box>
+                        <Box
+                          component="span"
+                          sx={{
+                            display: 'block',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            color: 'rgb(0 0 0/.6)',
+                            whiteSpace: 'nowrap',
+                          }}>
+                          {formatRelativeTime(data?.createdAt)}
+                        </Box>
+                      </Link>
+                      <Typography
+                        component="span"
+                        sx={{fontSize: '13px', color: '#000'}}>
+                        {data?.content}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      {data?.author === currentLoggedInUserId && (
+                        <EditIcon
+                          onClick={() => {
+                            handleEditComment(data?._id, data?.content)
+                          }}
+                          sx={{
+                            fontSize: '1rem',
+                            mr: '8px',
+                            transition: '0.1s',
+                            color: '#9f9fbe',
+                            cursor: 'pointer',
+                            ':hover': {
+                              color: '#666666',
+                            },
+                          }}
+                        />
+                      )}
+
+                      <DeleteIcon
+                        onClick={async () => {
+                          await handleDeleteComment(data?._id)
                         }}
                         sx={{
                           fontSize: '1rem',
-                          mr: '8px',
                           transition: '0.1s',
                           color: '#9f9fbe',
                           cursor: 'pointer',
@@ -235,28 +257,29 @@ function CommentBox({contentId}: CommentBoxProps): React.JSX.Element {
                           },
                         }}
                       />
-                    )}
-
-                    <DeleteIcon
-                      onClick={async () => {
-                        await handleDeleteComment(data?._id)
-                      }}
-                      sx={{
-                        fontSize: '1rem',
-                        transition: '0.1s',
-                        color: '#9f9fbe',
-                        cursor: 'pointer',
-                        ':hover': {
-                          color: '#666666',
-                        },
-                      }}
-                    />
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          )
-        })}
+            )
+          })}
+        {userComments.length > numberOfDisplayComment && (
+          <Button
+            variant="outlined"
+            onClick={handleLoadMore}
+            sx={{
+              margin: '0.5rem 0',
+              marginLeft: '45px',
+              height: '25px',
+              padding: '0px 10px',
+              borderRadius: '28px',
+              fontSize: '12px',
+              color: '#0a66c2',
+            }}>
+            Load More
+          </Button>
+        )}
+      </Box>
     </Box>
   )
 }
