@@ -106,6 +106,11 @@ const ApiUtils = {
       endpoint: `${apiEndpoints.LINKEDIN_COMMENT}/${commentId}`,
       data: params,
     }),
+  searchFilter: async (params: any) =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
+    }),
 }
 
 export default ApiUtils
