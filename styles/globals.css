@@ -289,3 +289,14 @@ color: #fff !important;
     left: 80px !important;
     cursor: pointer;
 }
+.comment-box label{
+  line-height: 0.8;
+  font-size: 14px;
+}
+.comment-box .MuiInputBase-formControl{
+padding: 9.5px;
+  border-radius: 35px !important;
+}
+.comment-box textarea{
+  font-size: 13px;
+}

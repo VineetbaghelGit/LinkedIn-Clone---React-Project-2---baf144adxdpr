@@ -26,6 +26,7 @@ import {useAppDispatch} from '@/components/store/hooks'
 import {removeLoginToken} from '@/components/store/slices/auth/reducer'
 import {deleteCookie} from 'cookies-next'
 import {USER_TOKEN} from '@/components/utils/AppConfig'
+import {ToasterMessage} from '@/components/helpers/ToastMessage'
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
@@ -220,10 +221,11 @@ export default function AuthHeader(): React.JSX.Element {
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
         <Link
-          href="#"
+          href="/login"
           className="dropdown-menu"
           onClick={() => {
             dispatch(removeLoginToken())
+            ToasterMessage('success', 'Logout Successfully')
             deleteCookie(USER_TOKEN)
           }}>
           Sign out

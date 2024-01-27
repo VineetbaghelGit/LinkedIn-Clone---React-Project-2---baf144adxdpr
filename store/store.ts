@@ -1,8 +1,10 @@
 import loginSlice from './slices/auth/reducer'
+import userSlice from './slices/user/reducer'
 import {type Action, configureStore, type ThunkAction} from '@reduxjs/toolkit'
 export const store = configureStore({
   reducer: {
     Login: loginSlice,
+    User: userSlice,
   },
 })
 
