@@ -27,6 +27,7 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+     
     ],
   },
 };
