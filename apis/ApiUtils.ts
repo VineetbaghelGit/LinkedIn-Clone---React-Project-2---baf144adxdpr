@@ -116,6 +116,16 @@ const ApiUtils = {
       method: 'GET',
       endpoint: `${apiEndpoints.LINKEDIN_USER}${params}`,
     }),
+  followUser: async (params: string) =>
+    await genericApiCall({
+      method: 'POST',
+      endpoint: `${apiEndpoints.LINKEDIN_FOLLOW}${params}`,
+    }),
+  unfollowUser: async (params: string) =>
+    await genericApiCall({
+      method: 'DELETE',
+      endpoint: `${apiEndpoints.LINKEDIN_FOLLOW}${params}`,
+    }),
 }
 
 export default ApiUtils

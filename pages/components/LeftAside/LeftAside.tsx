@@ -166,7 +166,7 @@ function LeftAside(): React.JSX.Element {
                   fontSize: '15px',
                   color: 'rgb(0 0 0/.9)',
                 }}>
-                LinkRick
+                Company Page1
               </Typography>
               <Typography
                 sx={{
@@ -205,7 +205,7 @@ function LeftAside(): React.JSX.Element {
                   fontSize: '15px',
                   color: 'rgb(0 0 0/.9)',
                 }}>
-                LinkRick
+                Company Page2
               </Typography>
               <Typography
                 sx={{
