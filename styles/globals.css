@@ -196,10 +196,10 @@ ul li .profile-image {
 }
 @media(max-width: 576px){
 .css-fs6082{
-  left: 60px;
+  left: 45px !important;
 }
 .css-mij4h{
-  margin-left: 10px;
+  margin-left: 10px !important;
 }
 }
 
