@@ -42,6 +42,7 @@ function ProfileLeftAside(): React.JSX.Element {
   return (
     <>
       <Box
+        className="user_info_card"
         sx={{
           margin: '0 0 .8rem',
           background: '#fff',
@@ -78,8 +79,8 @@ function ProfileLeftAside(): React.JSX.Element {
           </Box>
           <Box
             sx={{
-              mt: '0.8rem',
-              ml: '0.1rem',
+              mt: '0.5rem',
+              ml: '0.8rem',
               display: 'flex',
               justifyContent: 'space-between',
               flex: 'wrap',
@@ -124,8 +125,8 @@ function ProfileLeftAside(): React.JSX.Element {
                 500+ connections
               </Typography>
             </Box>
-            <Box>
-              <Box sx={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+            <Box className="job_education">
+              <Box sx={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                 <Image
                   alt="company_img"
                   src={DefaultPlaceholderImg}
@@ -150,7 +151,7 @@ function ProfileLeftAside(): React.JSX.Element {
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '5px',
+                  gap: '8px',
                   mt: '10px',
                 }}>
                 <Image
@@ -174,7 +175,13 @@ function ProfileLeftAside(): React.JSX.Element {
               </Box>
             </Box>
           </Box>
-          <Box sx={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'center',
+              ml: '0.7rem',
+            }}>
             <Button
               variant="contained"
               sx={{

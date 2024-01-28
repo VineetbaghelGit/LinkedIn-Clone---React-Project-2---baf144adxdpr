@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import InputBase from '@mui/material/InputBase'
 import React, {useEffect, useState} from 'react'
 import {Box, Typography} from '@mui/material'
-import ProfileImage from '@/components/images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Link from 'next/link'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {type PostTypes} from '@/components/utils/TypeConfig'
@@ -155,7 +155,7 @@ function SearchBox({
                   </Box>
                   <Box className="border_radius-50">
                     <Image
-                      src={ProfileImage}
+                      src={data?.author?.profileImage ?? DefaultUserImg}
                       height={30}
                       width={30}
                       alt="user_profile"

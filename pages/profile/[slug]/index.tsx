@@ -10,10 +10,12 @@ function Profile(): React.JSX.Element {
         <Box sx={{margin: '0px 30px'}}>
           <Grid container={true}>
             <Grid item={true} xs={12} md={9}>
-              <ProfileLeftAside />
+              <Box sx={{padding: '0px 10px'}}>
+                <ProfileLeftAside />
+              </Box>
             </Grid>
             <Grid item={true} xs={12} md={3}>
-              vinet
+              <Box sx={{padding: '0px 10px'}}>vinet</Box>
             </Grid>
           </Grid>
         </Box>
