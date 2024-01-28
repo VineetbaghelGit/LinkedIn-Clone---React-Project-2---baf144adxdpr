@@ -28,8 +28,7 @@ function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
   const [numberOfDisplayComment, setNumberOfDisplayComment] =
     useState<number>(5)
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const userId: string = LoggedInUserId()
-  const currentLoggedInUserId = userId?.slice(1, -1)
+  const currentLoggedInUserId: string = LoggedInUserId()
 
   async function fetchCommentsForPost(id: string): Promise<void> {
     try {
