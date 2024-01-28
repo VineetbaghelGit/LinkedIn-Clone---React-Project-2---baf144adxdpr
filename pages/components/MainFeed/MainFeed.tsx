@@ -9,7 +9,7 @@ import {ToasterMessage} from '@/components/helpers/ToastMessage'
 
 function MainFeed(): React.JSX.Element {
   const [feedContent, setFeedContent] = useState<PostTypes[]>([])
-  console.log('🚀 ~ MainFeed ~ feedContent:', feedContent)
+  // console.log('🚀 ~ MainFeed ~ feedContent:', feedContent)
   const [isLoading, setIsLoading] = useState(false)
   const [index, setIndex] = useState(1)
   const loaderRef = useRef(null)

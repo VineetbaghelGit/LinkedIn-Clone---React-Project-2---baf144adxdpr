@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {useAppSelector} from '../store/hooks'
 
 export function IsUserAuthenticated(): boolean {
@@ -6,5 +7,9 @@ export function IsUserAuthenticated(): boolean {
 }
 export function LoggedInUserId(): string {
   const id = useAppSelector((state: any) => state?.User?.userId)
-  return JSON.parse(id)
+  return id
+}
+export function LoggedInUserDetails(): any {
+  const details = useAppSelector((state: any) => state?.User?.userDetails)
+  return details
 }

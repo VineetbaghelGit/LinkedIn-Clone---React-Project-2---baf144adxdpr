@@ -7,7 +7,7 @@
 import {Box, Button, Divider, TextField} from '@mui/material'
 import Image from 'next/image'
 import React, {type ChangeEvent, useEffect, useRef, useState} from 'react'
-import ProfileImage from '../../../images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Modal from '@mui/material/Modal'
 import Popover from '@mui/material/Popover'
 // eslint-disable-next-line max-len
@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import {type PostTypes} from '@/components/utils/TypeConfig'
+import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -52,6 +53,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const userDetails = LoggedInUserDetails()
 
   const emojiRef = useRef<HTMLDivElement | null>(null)
 
@@ -149,6 +151,13 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
       }
     }
   }
+  useEffect(() => {
+    if (open) {
+      setInputValue('')
+      setSelectedFiles([])
+      setImagePreviews([])
+    }
+  }, [open])
   return (
     <Modal
       className="create_post_modal"
@@ -175,7 +184,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
               }}>
               <Box className="border_radius-50">
                 <Image
-                  src={ProfileImage}
+                  src={userDetails?.profileImage ?? DefaultUserImg}
                   height={48}
                   width={48}
                   alt="user_profile"
@@ -243,7 +252,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
               }}>
               {imagePreviews?.map((filePreview, index) => (
                 <div
-                  key={crypto.randomUUID()}
+                  key={index}
                   className={`mb-2 image-preview ${
                     index % 6 === 2 ? 'w-1/6' : 'w-full md:w-1/6'
                   }`}>

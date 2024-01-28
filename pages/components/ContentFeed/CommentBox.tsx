@@ -5,7 +5,7 @@
 /* eslint-disable quote-props */
 import {Box, Button, Typography} from '@mui/material'
 import React, {useEffect, useRef, useState} from 'react'
-import ProfileImage from '../../../images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Image from 'next/image'
 import InputTextField from '../InputField/InputTextField'
 import Link from 'next/link'
@@ -106,7 +106,12 @@ function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
           gap: '6px',
         }}>
         <Box component="span" className="border_radius-50">
-          <Image src={ProfileImage} height={35} width={35} alt="user_profile" />
+          <Image
+            src={DefaultUserImg}
+            height={35}
+            width={35}
+            alt="user_profile"
+          />
         </Box>
         <Box sx={{flex: '1'}}>
           <InputTextField
@@ -164,7 +169,7 @@ function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
                   }}>
                   <Box className="border_radius-50">
                     <Image
-                      src={ProfileImage}
+                      src={DefaultUserImg}
                       height={35}
                       width={35}
                       alt="user_profile"

@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import ProfileImage from '@/components/images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import {Box, CardHeader, IconButton, Menu, MenuItem} from '@mui/material'
@@ -100,7 +100,7 @@ function GroupsList(): React.JSX.Element {
                     gap: '10px',
                   }}>
                   <Image
-                    src={data?.image.length > 0 ? data?.image : ProfileImage}
+                    src={data?.image.length > 0 ? data?.image : DefaultUserImg}
                     width={50}
                     height={50}
                     className="profile-image"

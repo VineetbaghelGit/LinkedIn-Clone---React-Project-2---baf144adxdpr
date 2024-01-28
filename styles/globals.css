@@ -23,7 +23,7 @@ a{
   border-bottom: 1px solid rgb(140 140 140/0.2);
   position: fixed;
   width: 100%;
-  z-index: 9999;
+  z-index: 999;
 }
 .global_header .css-1x7skt0{
   box-shadow: none !important;
@@ -74,7 +74,7 @@ a{
 .header_more_icon svg path {
   color: #666666 !important;
 }
-.header_dropdown .css-pwxzbm {
+.header_dropdown .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
   top: 70px !important;
   border: 4px;
 }
@@ -172,10 +172,37 @@ ul li .profile-image {
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
-  .css-fzumoh{
-    width: 90vw !important;
+  .css-fzumoh, .css-19uqmr6{
+    width: 92vw !important;
   }
+ 
+.css-1oqqzyl-MuiContainer-root{
+  padding-left: 0px;
+  padding-right: 5px;
 }
+.user_info_card .css-1w9xeum{
+  flex-direction: column !important;
+}
+.user_info_card .css-1w9xeum .job_education{
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+}
+@media(max-width: 480px){
+.css-fzumoh{
+    height: 76vh !important;
+  }
+
+}
+@media(max-width: 576px){
+.css-fs6082{
+  left: 60px;
+}
+.css-mij4h{
+  margin-left: 10px;
+}
+}
+
 @media(max-width: 992px){
 .EmojiPickerReact.epr-main{
   left: 0px !important;
