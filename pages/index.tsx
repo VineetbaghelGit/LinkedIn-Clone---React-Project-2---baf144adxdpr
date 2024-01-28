@@ -3,6 +3,8 @@ import AuthLayout from '../appLayouts/AuthLayout'
 import {Box, Container, Grid} from '@mui/material'
 import LeftAside from './components/LeftAside/LeftAside'
 import MainFeed from './components/MainFeed/MainFeed'
+import PremiumCard from './components/RightAside/PremiumCard'
+import MenuOptions from './components/RightAside/MenuOptions'
 
 function PageHome(): React.JSX.Element {
   return (
@@ -21,7 +23,10 @@ function PageHome(): React.JSX.Element {
               </Box>
             </Grid>
             <Grid item={true} sm={3} md={3}>
-              <Box sx={{padding: '0px 10px'}}>Hello</Box>
+              <Box sx={{padding: '0px 10px', position: 'sticky', top: '80px'}}>
+                <PremiumCard />
+                <MenuOptions />
+              </Box>
             </Grid>
           </Grid>
         </Box>

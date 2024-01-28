@@ -19,17 +19,21 @@ import {
   type UserProfileType,
 } from '@/components/utils/TypeConfig'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
+import CheckIcon from '@mui/icons-material/Check'
 import ApiUtils from '@/components/apis/ApiUtils'
+import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
 function ProfileLeftAside(): React.JSX.Element {
   const searchParams = useParams()
   const [userData, setUserData] = useState<UserProfileType>()
+  const userDetails = LoggedInUserDetails()
+
   useEffect(() => {
     if (typeof searchParams?.slug === 'string') {
       const id = searchParams?.slug?.split('-').pop() ?? ''
-      void fetchGroupList(id)
+      void fetchUserInfo(id)
     }
   }, [searchParams])
-  async function fetchGroupList(userId: string): Promise<void> {
+  async function fetchUserInfo(userId: string): Promise<void> {
     try {
       const response: ApiResponseType = (await ApiUtils.getUserDetails(
         `/${userId}`,
@@ -37,6 +41,25 @@ function ProfileLeftAside(): React.JSX.Element {
       setUserData(response?.data)
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
+    }
+  }
+  const handleFollowFeature = async (userId: string): Promise<void> => {
+    if (userData?.isFollowed ?? false) {
+      try {
+        await ApiUtils.unfollowUser(`/${userId}`)
+        ToasterMessage('success', 'User unfollowed successfully')
+        void fetchUserInfo(userId)
+      } catch (err: any) {
+        ToasterMessage('error', err?.response?.data.message)
+      }
+    } else {
+      try {
+        const response: any = await ApiUtils.followUser(`/${userId}`)
+        ToasterMessage('success', response?.message)
+        void fetchUserInfo(userId)
+      } catch (err: any) {
+        ToasterMessage('error', err?.response?.data.message)
+      }
     }
   }
   return (
@@ -182,22 +205,49 @@ function ProfileLeftAside(): React.JSX.Element {
               alignItems: 'center',
               ml: '0.7rem',
             }}>
-            <Button
-              variant="contained"
-              sx={{
-                margin: '0.5rem 0',
-                height: '34px',
-                overflow: 'hidden',
-                padding: '10px',
-                borderRadius: '28px',
-                fontSize: '12px',
-                background: '#0a66c2',
-                ':hover': {background: '#004182'},
-              }}>
-              {' '}
-              <PersonAddIcon sx={{fontSize: '1.1rem', mr: '3px'}} />
-              Connect
-            </Button>
+            {userData?._id === userDetails?._id ? (
+              <Button
+                variant="contained"
+                sx={{
+                  margin: '0.5rem 0',
+                  height: '34px',
+                  overflow: 'hidden',
+                  padding: '10px',
+                  borderRadius: '28px',
+                  fontSize: '12px',
+                  background: '#0a66c2',
+                  ':hover': {background: '#004182'},
+                }}>
+                Open to
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={async () => {
+                  if (userData != null) {
+                    await handleFollowFeature(userData._id)
+                  }
+                }}
+                sx={{
+                  margin: '0.5rem 0',
+                  height: '34px',
+                  overflow: 'hidden',
+                  padding: '10px',
+                  borderRadius: '28px',
+                  fontSize: '12px',
+                  background: '#0a66c2',
+                  ':hover': {background: '#004182'},
+                }}>
+                {' '}
+                {userData?.isFollowed ?? false ? (
+                  <CheckIcon sx={{fontSize: '1.1rem', mr: '5px'}} />
+                ) : (
+                  <PersonAddIcon sx={{fontSize: '1.1rem', mr: '5px'}} />
+                )}
+                {userData?.isFollowed ?? false ? 'Following' : 'Follow'}
+              </Button>
+            )}
+
             <Button
               variant="outlined"
               sx={{
@@ -209,7 +259,7 @@ function ProfileLeftAside(): React.JSX.Element {
                 fontSize: '12px',
                 color: '#0a66c2',
               }}>
-              Message
+              {userData?._id === userDetails?._id ? 'More' : 'Message'}
             </Button>
           </Box>
         </Box>
