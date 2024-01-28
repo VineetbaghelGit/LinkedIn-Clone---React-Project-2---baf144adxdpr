@@ -5,17 +5,19 @@ import {Box, Button} from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import ProfileImage from '../../../images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import ArticleIcon from '@mui/icons-material/Article'
 import ShareBoxModal from './ShareBoxModal'
 import {type PostTypes} from '@/components/utils/TypeConfig'
+import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
 interface ShareBoxFeedProps {
   readonly setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
 }
 function ShareBoxFeed({setFeedContent}: ShareBoxFeedProps): React.JSX.Element {
   const [open, setOpen] = React.useState(false)
+  const userDetails = LoggedInUserDetails()
 
   const handleOpen = (): void => {
     setOpen(true)
@@ -25,16 +27,29 @@ function ShareBoxFeed({setFeedContent}: ShareBoxFeedProps): React.JSX.Element {
   }
 
   return (
-    <Box className="avatar" sx={{margin: '0 0 .8rem', background: '#fff', borderRadius: '0.4rem'}}>
+    <Box
+      className="avatar"
+      sx={{margin: '0 0 .8rem', background: '#fff', borderRadius: '0.4rem'}}>
       <Box
         sx={{
           padding: '.8rem 1.6rem 0',
           display: 'flex',
           alignItems: 'center',
         }}>
-        <Link href="/profile">
+        <Link
+          style={{textDecoration: 'none'}}
+          href={`/profile/${userDetails?.name?.replace(
+            /\s+/g,
+            '-',
+          )}-${userDetails?._id}`}>
+          {' '}
           <Box sx={{marginRight: '0.8rem'}} className="border_radius-50">
-            <Image src={ProfileImage} width={48} height={48} alt="avatar" />
+            <Image
+              src={userDetails?.profileImage ?? DefaultUserImg}
+              width={48}
+              height={48}
+              alt="avatar"
+            />
           </Box>
         </Link>
         <Box
@@ -95,7 +110,11 @@ function ShareBoxFeed({setFeedContent}: ShareBoxFeedProps): React.JSX.Element {
           <span>Write Article</span>
         </Button>
       </Box>
-      <ShareBoxModal open={open} onClose={handleClose} setFeedContent={setFeedContent} />
+      <ShareBoxModal
+        open={open}
+        onClose={handleClose}
+        setFeedContent={setFeedContent}
+      />
     </Box>
   )
 }

@@ -1,5 +1,4 @@
 /* eslint-disable arrow-parens */
-/* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
 import {
   Box,
@@ -19,11 +18,14 @@ import * as Yup from 'yup'
 import GuestLayout from '@/components/appLayouts/GuestLayout'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {setCookie} from 'cookies-next'
-import {USER_ID, USER_TOKEN} from '@/components/utils/AppConfig'
+import {USER_DETAILS, USER_ID, USER_TOKEN} from '@/components/utils/AppConfig'
 import {useAppDispatch} from '@/components/store/hooks'
 import {setLoginToken} from '@/components/store/slices/auth/reducer'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
-import {setLoggedInUserId} from '@/components/store/slices/user/reducer'
+import {
+  setLoggedInUserDetails,
+  setLoggedInUserId,
+} from '@/components/store/slices/user/reducer'
 
 function LoginPage(): React.JSX.Element {
   const router = useRouter()
@@ -43,8 +45,10 @@ function LoginPage(): React.JSX.Element {
         const response: any = await ApiUtils.authLogin(value)
         setCookie(USER_TOKEN, JSON.stringify(response?.token))
         setCookie(USER_ID, JSON.stringify(response?.data?._id))
+        setCookie(USER_DETAILS, JSON.stringify(response?.data))
         dispatch(setLoginToken(response?.token))
         dispatch(setLoggedInUserId(response?.data?._id))
+        dispatch(setLoggedInUserDetails(response?.data))
         router.push('/')
         ToasterMessage('success', 'Login Successfully')
         loginValidation.resetForm()

@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable quote-props */
 /* eslint-disable quotes */
@@ -15,20 +16,27 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Image from 'next/image'
 import logoLinkedin from '@/components/images/LinkedIn_icon.svg.png'
-import ProfileImage from '@/components/images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import {Home, Message, People, Work} from '@mui/icons-material'
 import {Button, Divider} from '@mui/material'
 import Link from 'next/link'
 import {useAppDispatch} from '@/components/store/hooks'
 import {removeLoginToken} from '@/components/store/slices/auth/reducer'
 import {deleteCookie} from 'cookies-next'
-import {USER_TOKEN} from '@/components/utils/AppConfig'
+import {USER_DETAILS, USER_ID, USER_TOKEN} from '@/components/utils/AppConfig'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import Backdrop from '@mui/material/Backdrop'
 import SearchBox from './SearchBox'
+import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
+import {
+  removeLoggedInUserDetails,
+  removeLoggedInUserId,
+} from '@/components/store/slices/user/reducer'
 
 export default function AuthHeader(): React.JSX.Element {
   const dispatch = useAppDispatch()
+  const userDetails = LoggedInUserDetails()
+
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -73,51 +81,60 @@ export default function AuthHeader(): React.JSX.Element {
       className="header_dropdown"
       open={isMenuOpen}
       onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>
-        <Image
-          src={ProfileImage}
-          width={50}
-          height={50}
-          className="profile-image"
-          alt="profile-image"
-        />
-        <Typography
-          variant="h4"
-          component="h2"
-          sx={{
-            lineHeight: '1.25',
-            color: 'rgba(0,0,0,0.9)',
-            fontSize: '16px',
-            marginLeft: '10px',
-          }}>
-          Vineet Baghel
+      <Link
+        style={{textDecoration: 'none'}}
+        href={`/profile/${userDetails?.name?.replace(
+          /\s+/g,
+          '-',
+        )}-${userDetails?._id}`}>
+        <MenuItem onClick={handleMenuClose}>
+          <Image
+            src={userDetails?.profileImage ?? DefaultUserImg}
+            width={50}
+            height={50}
+            className="profile-image"
+            alt="profile-image"
+          />
           <Typography
             variant="h4"
-            component="p"
+            component="h2"
             sx={{
-              lineHeight: '1.50',
+              lineHeight: '1.25',
               color: 'rgba(0,0,0,0.9)',
-              fontSize: '14px',
-              marginTop: '10px',
+              fontSize: '16px',
+              marginLeft: '10px',
             }}>
-            Frontend Developer at Tecmantras Solution
+            {userDetails?.name}
+            <Typography
+              variant="h4"
+              component="p"
+              sx={{
+                lineHeight: '1.50',
+                color: 'rgba(0,0,0,0.9)',
+                fontSize: '14px',
+                marginTop: '10px',
+              }}>
+              {userDetails != null && userDetails?.workExperience?.length > 0
+                ? `${userDetails?.workExperience[0]?.companyName}`
+                : 'Full Stack Developer at Adobe Oraganiztion'}
+            </Typography>
           </Typography>
-        </Typography>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Button
-          sx={{
-            padding: '1px 10px',
-            width: '100%',
-            border: '1px solid #0a66c2',
-            marginTop: '10px',
-            ':hover': {
-              backgroundColor: 'none !important',
-            },
-          }}>
-          View Profile
-        </Button>
-      </MenuItem>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <Button
+            sx={{
+              padding: '1px 10px',
+              width: '100%',
+              border: '1px solid #0a66c2',
+              marginTop: '10px',
+              ':hover': {
+                backgroundColor: 'none !important',
+              },
+            }}>
+            View Profile
+          </Button>
+        </MenuItem>
+      </Link>
       <Divider light={true} />
       <Typography
         variant="h4"
@@ -185,8 +202,12 @@ export default function AuthHeader(): React.JSX.Element {
           className="dropdown-menu"
           onClick={() => {
             dispatch(removeLoginToken())
-            ToasterMessage('success', 'Logout Successfully')
+            dispatch(removeLoggedInUserId())
+            dispatch(removeLoggedInUserDetails())
             deleteCookie(USER_TOKEN)
+            deleteCookie(USER_ID)
+            deleteCookie(USER_DETAILS)
+            ToasterMessage('success', 'Logout Successfully')
           }}>
           Sign out
         </Link>
@@ -265,19 +286,22 @@ export default function AuthHeader(): React.JSX.Element {
   return (
     <>
       <Backdrop
-        sx={{color: '#fff', zIndex: 9999}}
+        sx={{color: '#fff', zIndex: 999}}
         open={openBackdrop}
         onClick={handleCloseBackdrop}></Backdrop>
       <Box className="header">
         <Box sx={{flexGrow: 1}} className="global_header">
           <AppBar position="static">
             <Toolbar>
-              <Image
-                src={logoLinkedin}
-                width={36}
-                height={36}
-                alt="linkedin-logo"
-              />{' '}
+              <Link href="/">
+                <Image
+                  src={logoLinkedin}
+                  width={36}
+                  height={36}
+                  alt="linkedin-logo"
+                  style={{marginTop: '6px'}}
+                />{' '}
+              </Link>
               <SearchBox
                 onFocusedInput={onFocusedInput}
                 openBackdrop={openBackdrop}

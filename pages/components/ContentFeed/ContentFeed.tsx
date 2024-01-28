@@ -8,7 +8,7 @@ import {Box, Button, Typography} from '@mui/material'
 import React, {useState} from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import Image from 'next/image'
-import ProfileImage from '../../../images/linkedin_profile.jpg'
+import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Link from 'next/link'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import CommentIcon from '@mui/icons-material/Comment'
@@ -99,7 +99,7 @@ function ContentFeed({
                   }}
                   className="content_feed_header">
                   <Box component="span" sx={{fontSize: '14px'}}>
-                    heloo
+                    New Post
                   </Box>
                   <CloseIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
@@ -125,7 +125,7 @@ function ContentFeed({
                     }}>
                     <Box className="border_radius-50">
                       <Image
-                        src={content?.author?.profileImage ?? ProfileImage}
+                        src={content?.author?.profileImage ?? DefaultUserImg}
                         height={48}
                         width={48}
                         alt="user_profile"
@@ -138,7 +138,11 @@ function ContentFeed({
                         marginLeft: '0.8rem',
                         overflow: 'hidden',
                       }}>
-                      <Link href="/profile">
+                      <Link
+                        href={`/profile/${content?.author.name.replace(
+                          /\s+/g,
+                          '-',
+                        )}-${content?.author._id}`}>
                         <Box
                           component="span"
                           sx={{

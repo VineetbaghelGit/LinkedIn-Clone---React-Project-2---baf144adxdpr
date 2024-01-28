@@ -17,7 +17,10 @@ import * as Yup from 'yup'
 import GuestLayout from '@/components/appLayouts/GuestLayout'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
+import {useRouter} from 'next/navigation'
 function SignupPage(): React.JSX.Element {
+  const router = useRouter()
+
   const signupValidation = useFormik({
     initialValues: {
       name: '',
@@ -35,6 +38,7 @@ function SignupPage(): React.JSX.Element {
         await ApiUtils.authSignup(values)
         ToasterMessage('success', 'Signup Successfully')
         signupValidation.resetForm()
+        router.push('/login')
       } catch (err: any) {
         ToasterMessage('error', err?.response?.data?.message)
       }

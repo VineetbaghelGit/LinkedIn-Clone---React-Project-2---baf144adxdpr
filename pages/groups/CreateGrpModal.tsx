@@ -4,7 +4,7 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable quote-props */
 import {Box, Button, FormControl, Modal, Typography} from '@mui/material'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ApiUtils from '@/components/apis/ApiUtils'
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
@@ -80,6 +80,12 @@ function CreateGrpModal({
       setImagePreview(objectUrl)
     }
   }
+  useEffect(() => {
+    if (open) {
+      formValidationGroup.resetForm()
+      setImagePreview('')
+    }
+  }, [open])
   return (
     <Modal
       className="create_post_modal"
