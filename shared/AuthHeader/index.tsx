@@ -318,14 +318,16 @@ export default function AuthHeader(): React.JSX.Element {
                     <Typography variant="h5">Home</Typography>
                   </IconButton>
                 </Link>
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  className="header_icon"
-                  color="inherit">
-                  <People />
-                  <Typography variant="h5">Network</Typography>
-                </IconButton>
+                <Link href="/groups">
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    className="header_icon"
+                    color="inherit">
+                    <People />
+                    <Typography variant="h5">Network</Typography>
+                  </IconButton>
+                </Link>
 
                 <IconButton
                   size="large"

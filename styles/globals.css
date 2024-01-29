@@ -198,6 +198,9 @@ ul li .profile-image {
 .css-fs6082{
   left: 45px !important;
 }
+ .premium_page .css-qvpmyc{
+    padding: 20px 35px !important;
+  }
 .css-mij4h{
   margin-left: 10px !important;
 }
@@ -326,4 +329,7 @@ padding: 9.5px;
 }
 .comment-box textarea{
   font-size: 13px;
+}
+@media(max-width:576px) {
+ 
 }
