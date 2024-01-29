@@ -4,6 +4,7 @@ import React from 'react'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import LinkdeinPremiumLogo from '@/components/images/linkedin_premium_logo.jpg'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
+import Link from 'next/link'
 function PremiumCard(): React.JSX.Element {
   const userDetails = LoggedInUserDetails()
 
@@ -60,20 +61,22 @@ function PremiumCard(): React.JSX.Element {
           Get ahead in 2024 with new Premium features{' '}
         </Typography>
         <Box sx={{textAlign: 'center', mt: '3px'}}>
-          <Button
-            variant="outlined"
-            sx={{
-              margin: '0.5rem 0',
-              height: '34px',
-              overflow: 'hidden',
-              padding: '10px',
-              borderRadius: '28px',
-              fontSize: '12px',
-              fontWeight: '500',
-              color: '#0a66c2',
-            }}>
-            Try for free !
-          </Button>
+          <Link href="/go-premium">
+            <Button
+              variant="outlined"
+              sx={{
+                margin: '0.5rem 0',
+                height: '34px',
+                overflow: 'hidden',
+                padding: '10px',
+                borderRadius: '28px',
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#0a66c2',
+              }}>
+              Try for free !
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>
