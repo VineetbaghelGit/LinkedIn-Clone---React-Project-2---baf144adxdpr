@@ -49,6 +49,7 @@ The web app includes the following features:
 The project is built using the following technologies:
 
 - React
+- Nextjs
 - TypeScript
 - Axios
 - cookies-next

@@ -47,6 +47,12 @@ const ApiUtils = {
       endpoint: apiEndpoints.SIGNUP,
       data: params,
     }),
+  updatePassword: async (params: any) =>
+    await genericApiCall({
+      method: 'PATCH',
+      endpoint: apiEndpoints.UPDATE_PASSWORD,
+      data: params,
+    }),
   createPost: async (params: any) =>
     await genericApiCall({
       method: 'POST',
