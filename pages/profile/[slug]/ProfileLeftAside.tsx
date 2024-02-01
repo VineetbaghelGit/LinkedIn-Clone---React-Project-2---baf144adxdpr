@@ -22,6 +22,7 @@ import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import CheckIcon from '@mui/icons-material/Check'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
+import Link from 'next/link'
 function ProfileLeftAside(): React.JSX.Element {
   const searchParams = useParams()
   const [userData, setUserData] = useState<UserProfileType>()
@@ -247,20 +248,21 @@ function ProfileLeftAside(): React.JSX.Element {
                 {userData?.isFollowed ?? false ? 'Following' : 'Follow'}
               </Button>
             )}
-
-            <Button
-              variant="outlined"
-              sx={{
-                margin: '0.5rem 0',
-                height: '34px',
-                overflow: 'hidden',
-                padding: '10px',
-                borderRadius: '28px',
-                fontSize: '12px',
-                color: '#0a66c2',
-              }}>
-              {userData?._id === userDetails?._id ? 'More' : 'Message'}
-            </Button>
+            <Link href={userData?._id === userDetails?._id ? '#' : '/message'}>
+              <Button
+                variant="outlined"
+                sx={{
+                  margin: '0.5rem 0',
+                  height: '34px',
+                  overflow: 'hidden',
+                  padding: '10px',
+                  borderRadius: '28px',
+                  fontSize: '12px',
+                  color: '#0a66c2',
+                }}>
+                {userData?._id === userDetails?._id ? 'More' : 'Message'}
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Box>

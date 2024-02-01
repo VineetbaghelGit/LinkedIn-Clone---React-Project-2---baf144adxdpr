@@ -1,12 +1,13 @@
+/* eslint-disable no-void */
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable arrow-parens */
 /* eslint-disable max-len */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
-import {Box, Button, Typography} from '@mui/material'
+import {Box, Button, Menu, MenuItem, Typography} from '@mui/material'
 import React, {useState} from 'react'
-import CloseIcon from '@mui/icons-material/Close'
 import Image from 'next/image'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Link from 'next/link'
@@ -20,16 +21,25 @@ import ImageCarousel from './ImageCarousel'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import CommentBox from './CommentBox'
+import MoreIcon from '@mui/icons-material/MoreVert'
+import ShareBoxModal from '../ShareBoxFeed/ShareBoxModal'
+
 interface PostProps {
   readonly feedContent: PostTypes[]
   setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
   index: number
+  open: boolean
+  handleOpen: () => void
+  handleClose: () => void
 }
 
 function ContentFeed({
   feedContent,
   setFeedContent,
   index,
+  open,
+  handleOpen,
+  handleClose,
 }: Readonly<PostProps>): React.JSX.Element {
   const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
     {},
@@ -37,7 +47,17 @@ function ContentFeed({
   const [showCommentsStates, setShowCommentsStates] = useState<
     Record<string, boolean>
   >({})
-
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+  const [postDetails, setPostDetails] = useState<PostTypes>()
+  const mobileMenuId = 'primary-search-account-menu-mobile'
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
+  const handleMobileMenuClose = (): void => {
+    setMobileMoreAnchorEl(null)
+  }
   const handleShowMoreToggle = (contentId: string): void => {
     setShowMoreStates(prev => ({...prev, [contentId]: !prev[contentId]}))
   }
@@ -53,6 +73,7 @@ function ContentFeed({
         `?limit=10&page=${index}`,
       )
       setFeedContent(prevItems => [...prevItems, ...getPostResponse.data])
+      //  setFeedContent(getPostResponse.data)
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
     }
@@ -69,7 +90,11 @@ function ContentFeed({
       ToasterMessage('error', err?.response?.data.message)
     }
   }
-
+  const openEditPostModal = (post: PostTypes): void => {
+    console.log('🚀 ~ openEditPostModal ~ post:', post)
+    setPostDetails(post)
+    handleOpen()
+  }
   return (
     <>
       {feedContent?.length > 0
@@ -79,6 +104,7 @@ function ContentFeed({
 
             return (
               <Box
+                id="content_feed"
                 key={content._id}
                 sx={{
                   margin: '0 0 .8rem',
@@ -101,13 +127,48 @@ function ContentFeed({
                   <Box component="span" sx={{fontSize: '14px'}}>
                     New Post
                   </Box>
-                  <CloseIcon
+                  <MoreIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
-                    onClick={async () => {
-                      await handleDeletePost(content?._id)
+                    onClick={(e: any) => {
+                      handleMobileMenuOpen(e)
                     }}
                   />
                 </Box>
+                <Menu
+                  anchorEl={mobileMoreAnchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  id={mobileMenuId}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={isMobileMenuOpen}
+                  className="header_dropdown"
+                  onClose={handleMobileMenuClose}>
+                  <MenuItem>
+                    <Typography
+                      component="a"
+                      sx={{fontSize: '13px'}}
+                      onClick={() => openEditPostModal(content)}>
+                      Edit Post
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem>
+                    <Typography
+                      component="a"
+                      sx={{fontSize: '13px'}}
+                      onClick={async () =>
+                        await handleDeletePost(content?._id)
+                      }>
+                      Delete
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+
                 <Box
                   sx={{
                     flexWrap: 'nowrap',
@@ -338,6 +399,12 @@ function ContentFeed({
             )
           })
         : ''}
+      <ShareBoxModal
+        postDetails={postDetails}
+        open={open}
+        onClose={handleClose}
+        setFeedContent={setFeedContent}
+      />
     </>
   )
 }
