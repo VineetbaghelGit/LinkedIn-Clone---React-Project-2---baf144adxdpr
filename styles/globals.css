@@ -74,7 +74,7 @@ a{
 .header_more_icon svg path {
   color: #666666 !important;
 }
-.header_dropdown .MuiMenu-paper {
+.auth_header .header_dropdown .MuiMenu-paper {
   top: 70px !important;
   border: 4px;
 }
@@ -329,7 +329,4 @@ padding: 9.5px;
 }
 .comment-box textarea{
   font-size: 13px;
-}
-@media(max-width:576px) {
- 
 }

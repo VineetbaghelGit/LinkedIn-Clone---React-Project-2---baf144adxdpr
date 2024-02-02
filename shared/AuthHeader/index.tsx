@@ -325,7 +325,7 @@ export default function AuthHeader(): React.JSX.Element {
                     className="header_icon"
                     color="inherit">
                     <People />
-                    <Typography variant="h5">Network</Typography>
+                    <Typography variant="h5">Groups</Typography>
                   </IconButton>
                 </Link>
 

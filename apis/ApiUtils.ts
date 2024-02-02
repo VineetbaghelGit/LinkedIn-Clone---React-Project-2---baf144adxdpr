@@ -47,6 +47,12 @@ const ApiUtils = {
       endpoint: apiEndpoints.SIGNUP,
       data: params,
     }),
+  updatePassword: async (params: any) =>
+    await genericApiCall({
+      method: 'PATCH',
+      endpoint: apiEndpoints.UPDATE_PASSWORD,
+      data: params,
+    }),
   createPost: async (params: any) =>
     await genericApiCall({
       method: 'POST',
@@ -125,6 +131,11 @@ const ApiUtils = {
     await genericApiCall({
       method: 'DELETE',
       endpoint: `${apiEndpoints.LINKEDIN_FOLLOW}${params}`,
+    }),
+  getPostDetails: async (params: string) =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
     }),
 }
 

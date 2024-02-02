@@ -14,18 +14,26 @@ import ShareBoxModal from './ShareBoxModal'
 import {type PostTypes} from '@/components/utils/TypeConfig'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
 interface ShareBoxFeedProps {
+  open: boolean
+  handleOpen: () => void
+  handleClose: () => void
   readonly setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
 }
-function ShareBoxFeed({setFeedContent}: ShareBoxFeedProps): React.JSX.Element {
-  const [open, setOpen] = React.useState(false)
+function ShareBoxFeed({
+  open,
+  handleOpen,
+  handleClose,
+  setFeedContent,
+}: ShareBoxFeedProps): React.JSX.Element {
   const userDetails = LoggedInUserDetails()
+  // const [open, setOpen] = React.useState(false)
 
-  const handleOpen = (): void => {
-    setOpen(true)
-  }
-  const handleClose = (): void => {
-    setOpen(false)
-  }
+  // const handleOpen = (): void => {
+  //   setOpen(true)
+  // }
+  // const handleClose = (): void => {
+  //   setOpen(false)
+  // }
 
   return (
     <Box

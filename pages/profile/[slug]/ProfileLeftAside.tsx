@@ -4,7 +4,7 @@
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
 
-import {Box, Button, Typography} from '@mui/material'
+import {Box, Button, Modal, Typography} from '@mui/material'
 import Image from 'next/image'
 import React, {useEffect, useState} from 'react'
 import DefaultPlaceholderImg from '@/components/images/default-placeholder.jpg'
@@ -22,6 +22,23 @@ import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import CheckIcon from '@mui/icons-material/Check'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
+import Link from 'next/link'
+import ForgetPassword from '../../components/ForgetPassword'
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 620,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  borderRadius: '0.8rem',
+  p: 4,
+  height: '57vh',
+  ':focus-visible': {
+    outline: 'none',
+  },
+}
 function ProfileLeftAside(): React.JSX.Element {
   const searchParams = useParams()
   const [userData, setUserData] = useState<UserProfileType>()
@@ -61,6 +78,14 @@ function ProfileLeftAside(): React.JSX.Element {
         ToasterMessage('error', err?.response?.data.message)
       }
     }
+  }
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
   }
   return (
     <>
@@ -247,26 +272,57 @@ function ProfileLeftAside(): React.JSX.Element {
                 {userData?.isFollowed ?? false ? 'Following' : 'Follow'}
               </Button>
             )}
-
-            <Button
-              variant="outlined"
-              sx={{
-                margin: '0.5rem 0',
-                height: '34px',
-                overflow: 'hidden',
-                padding: '10px',
-                borderRadius: '28px',
-                fontSize: '12px',
-                color: '#0a66c2',
-              }}>
-              {userData?._id === userDetails?._id ? 'More' : 'Message'}
-            </Button>
+            {userData?._id === userDetails?._id ? (
+              <Button
+                variant="outlined"
+                onClick={handleOpen}
+                sx={{
+                  margin: '0.5rem 0',
+                  height: '34px',
+                  overflow: 'hidden',
+                  padding: '10px',
+                  borderRadius: '28px',
+                  fontSize: '12px',
+                  color: '#0a66c2',
+                }}>
+                Setting
+              </Button>
+            ) : (
+              <Link
+                href={userData?._id === userDetails?._id ? '#' : '/message'}>
+                <Button
+                  variant="outlined"
+                  onClick={handleOpen}
+                  sx={{
+                    margin: '0.5rem 0',
+                    height: '34px',
+                    overflow: 'hidden',
+                    padding: '10px',
+                    borderRadius: '28px',
+                    fontSize: '12px',
+                    color: '#0a66c2',
+                  }}>
+                  Message
+                </Button>
+              </Link>
+            )}
           </Box>
         </Box>
       </Box>
       <ExperienceSection workingDetails={userData?.workExperience} />
       <EducationSection educationDetails={userData?.education} />
       <SkillsSection skillsDetails={userData?.skills} />
+      <Modal
+        className="create_post_modal"
+        open={open}
+        disableScrollLock={true}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <ForgetPassword />
+        </Box>
+      </Modal>
     </>
   )
 }

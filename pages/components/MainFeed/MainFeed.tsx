@@ -9,11 +9,19 @@ import {ToasterMessage} from '@/components/helpers/ToastMessage'
 
 function MainFeed(): React.JSX.Element {
   const [feedContent, setFeedContent] = useState<PostTypes[]>([])
+  console.log('🚀 ~ MainFeed ~ feedContent:', feedContent)
   // console.log('🚀 ~ MainFeed ~ feedContent:', feedContent)
   const [isLoading, setIsLoading] = useState(false)
   const [index, setIndex] = useState(1)
   const loaderRef = useRef(null)
+  const [open, setOpen] = React.useState(false)
 
+  const handleOpen = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
+  }
   const fetchData = useCallback(async () => {
     if (isLoading) return
 
@@ -49,11 +57,19 @@ function MainFeed(): React.JSX.Element {
   }, [fetchData])
   return (
     <>
-      <ShareBoxFeed setFeedContent={setFeedContent} />
+      <ShareBoxFeed
+        setFeedContent={setFeedContent}
+        open={open}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+      />
       <ContentFeed
         feedContent={feedContent}
         setFeedContent={setFeedContent}
         index={index}
+        open={open}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
       />
       <div ref={loaderRef}>{isLoading && <Loader />}</div>
     </>
