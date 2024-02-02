@@ -28,21 +28,14 @@ This project is a clone of LinkedIn, a professional networking platform. It repl
 
 The web app includes the following features:
 
-1. **Signup:** Create a new account by providing your name, email, and password.
-
-2. **Login:** Sign in to your account using your registered email and password.
-
-3. **Forget Password:** Initiate a password reset if you forget your password.
-
-4. **Profile Management:** Manage your profile by updating information, changing profile pictures, and more.
-
-5. **Post Creation:** Share your thoughts and updates by creating posts. Edit and delete your posts as needed.
-
-6. **Follow/Unfollow:** Connect with other users by following them. Unfollow users if needed.
-
-7. **Search:** Search for other users and posts on the platform.
-
-8. **Group Creation:** Create and manage groups, allowing users to join and participate in discussions.
+1. Signup
+2. Login
+3. Forget Password
+4. Profile Management
+5. Post Creations
+6. Follow/Unfollow
+7. Searching
+8. Group 
 
 ## Tech Stack
 
@@ -87,7 +80,7 @@ Before you start, make sure you have the following software and dependencies ins
 
 ### Profile Management
 
-- **Update Profile:** Navigate to your profile page to update your information and change your profile picture.
+- **Update Profile:** Navigate to your profile page to update your password.
 
 ### Post Creation
 
