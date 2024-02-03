@@ -18,7 +18,9 @@ function AuthLayout({children}: Readonly<AuthLayoutProps>): React.JSX.Element {
   }, [isUserLoggedIn, router])
   return (
     <div>
-      <AuthHeader />
+      <Box className="auth_header">
+        <AuthHeader />
+      </Box>
       <Box sx={{paddingTop: '80px'}}>{children}</Box>
     </div>
   )

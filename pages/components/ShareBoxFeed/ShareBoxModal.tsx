@@ -39,22 +39,27 @@ const style = {
 }
 
 interface ShareModalProps {
+  postDetails?: PostTypes
   open: boolean
   onClose: () => void
   setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
 }
 const ShareBoxModal: React.FC<ShareModalProps> = ({
+  postDetails,
   open,
   onClose,
   setFeedContent,
 }) => {
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValue, setInputValue] = useState<string>(
+    postDetails?.content ?? '',
+  )
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
-  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [imagePreviews, setImagePreviews] = useState<string[]>(
+    postDetails?.images ?? [],
+  )
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const userDetails = LoggedInUserDetails()
-
   const emojiRef = useRef<HTMLDivElement | null>(null)
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>): void => {
@@ -152,12 +157,13 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
     }
   }
   useEffect(() => {
-    if (open) {
+    if (open && postDetails === null) {
       setInputValue('')
       setSelectedFiles([])
       setImagePreviews([])
     }
   }, [open])
+
   return (
     <Modal
       className="create_post_modal"
@@ -229,7 +235,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
             <TextField
               variant="standard"
               multiline
-              rows={selectedFiles.length > 0 ? 6 : 9}
+              rows={imagePreviews.length > 0 ? 6 : 9}
               value={inputValue}
               InputProps={{
                 disableUnderline: true,

@@ -1,40 +1,103 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LinkedIn Clone Web App
+
+A clone of LinkedIn - A professional networking platform with features such as user authentication, post creation, profile management, follow/unfollow, search, group creation, and more.
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Profile Management](#profile-management)
+  - [Post Creation](#post-creation)
+  - [Follow/Unfollow](#follow-unfollow)
+  - [Search](#search)
+  - [Group Creation](#group-creation)
+- [Demo](#demo)
+
+## Project Overview
+
+This project is a clone of LinkedIn, a professional networking platform. It replicates key features of LinkedIn, allowing users to create profiles, make posts, connect with others, join groups, and more.
+
+## Features
+
+The web app includes the following features:
+
+1. Signup
+2. Login
+3. Forget Password
+4. Profile Management
+5. Post Creations
+6. Follow/Unfollow
+7. Searching
+8. Group 
+
+## Tech Stack
+
+The project is built using the following technologies:
+
+- React
+- Nextjs
+- TypeScript
+- Axios
+- cookies-next
+- Redux Toolkit
+- Material UI
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Before you start, make sure you have the following software and dependencies installed:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Node.js
+- npm or yarn
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Installation
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. Clone this repository to your local machine.
+2. Navigate to the project directory.
+3. Run the following command to install the necessary dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   - `npm install` or `yarn install`
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Signup:** Create a new account by providing your name, email, and password.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Login:** Sign in to your account using your registered email and password.
 
-## Deploy on Vercel
+- **Forget Password:** If you forget your password, you can initiate a password reset from the login page. Follow the instructions provided to reset your password.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Profile Management
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Update Profile:** Navigate to your profile page to update your password.
+
+### Post Creation
+
+- **Create Post:** Share your thoughts and updates by creating posts. You can edit and delete your posts as needed.
+
+### Follow/Unfollow
+
+- **Connect with Others:** Follow other users to stay updated with their posts and activities. Unfollow users if needed.
+
+### Search
+
+- **User and Post Search:** Use the search feature to find other users and posts on the platform.
+
+### Group Creation
+
+- **Create Group:** Manage and participate in group discussions by creating and joining groups.
+
+## Demo
+
+[LinkedIn Clone App - by Vineet Baghel](https://linked-in-clone-react-project-2-baf144adxdpr-kex4.vercel.app/)
