@@ -150,7 +150,6 @@ function GroupsList(): React.JSX.Element {
                     horizontal: 'right',
                   }}
                   open={isMobileMenuOpen}
-                  className="header_dropdown"
                   onClose={handleMobileMenuClose}>
                   <MenuItem>
                     <Typography sx={{fontSize: '13px'}}>View Group</Typography>

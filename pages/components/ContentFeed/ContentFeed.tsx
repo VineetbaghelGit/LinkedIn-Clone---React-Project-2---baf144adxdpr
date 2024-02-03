@@ -147,7 +147,6 @@ function ContentFeed({
                     horizontal: 'right',
                   }}
                   open={isMobileMenuOpen}
-                  className="header_dropdown"
                   onClose={handleMobileMenuClose}>
                   <MenuItem>
                     <Typography

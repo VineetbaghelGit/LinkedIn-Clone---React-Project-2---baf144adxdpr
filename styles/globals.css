@@ -74,7 +74,7 @@ a{
 .header_more_icon svg path {
   color: #666666 !important;
 }
-.auth_header .header_dropdown .MuiMenu-paper {
+.main_header_dropdown .MuiMenu-paper {
   top: 70px !important;
   border: 4px;
 }
