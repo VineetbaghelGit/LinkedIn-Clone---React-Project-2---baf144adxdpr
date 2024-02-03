@@ -148,22 +148,6 @@ function LoginPage(): React.JSX.Element {
                   loginValidation.errors.password
                 }
               />
-              <Typography
-                sx={{
-                  fontSize: '15px',
-                  lineHeight: '1.25',
-                  color: 'rgba(0,0,0,0.9)',
-                  marginTop: '8px',
-                  fontWeight: '500',
-                  position: 'relative',
-                  left: '9px',
-                }}>
-                <Link
-                  href="/forgot-password"
-                  style={{color: '#0073b1', textDecoration: 'none'}}>
-                  Forgot Password?
-                </Link>
-              </Typography>
             </FormControl>
 
             <Stack sx={{padding: '16px', marginTop: '4px'}}>
