@@ -292,7 +292,6 @@ function ProfileLeftAside(): React.JSX.Element {
                 href={userData?._id === userDetails?._id ? '#' : '/message'}>
                 <Button
                   variant="outlined"
-                  onClick={handleOpen}
                   sx={{
                     margin: '0.5rem 0',
                     height: '34px',
