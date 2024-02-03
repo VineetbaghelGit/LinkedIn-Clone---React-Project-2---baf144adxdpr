@@ -78,7 +78,7 @@ export default function AuthHeader(): React.JSX.Element {
         vertical: 'top',
         horizontal: 'right',
       }}
-      className="header_dropdown"
+      className="main_header_dropdown"
       open={isMenuOpen}
       onClose={handleMenuClose}>
       <Link
@@ -230,7 +230,7 @@ export default function AuthHeader(): React.JSX.Element {
         horizontal: 'right',
       }}
       open={isMobileMenuOpen}
-      className="header_dropdown"
+      className="main_header_dropdown"
       onClose={handleMobileMenuClose}>
       <MenuItem>
         <IconButton
