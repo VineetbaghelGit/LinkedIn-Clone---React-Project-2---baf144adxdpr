@@ -44,12 +44,12 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
       ToasterMessage('error', err?.response?.data.message)
     }
   }
-  const showComments = showCommentsStates[content._id] || false
+  const showComments = showCommentsStates[content?._id] || false
 
   return (
     <Box
       id="content_feed"
-      key={feedContent._id}
+      key={feedContent?._id}
       sx={{
         margin: '0 0 .8rem',
         background: '#fff',
@@ -113,7 +113,7 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
               href={`/profile/${feedContent?.author?.name.replace(
                 /\s+/g,
                 '-',
-              )}-${feedContent?.author._id}`}>
+              )}-${feedContent?.author?._id}`}>
               <Box
                 component="span"
                 sx={{
@@ -199,7 +199,7 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
           <Typography
             component="a"
             onClick={() => {
-              handleShowComments(content._id)
+              handleShowComments(content?._id)
             }}
             sx={{
               cursor: 'pointer',
@@ -254,7 +254,7 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
             },
           }}
           onClick={() => {
-            handleShowComments(content._id)
+            handleShowComments(content?._id)
           }}>
           <CommentIcon sx={{color: '#5E5E5E'}} />
           <span>Comment</span>
