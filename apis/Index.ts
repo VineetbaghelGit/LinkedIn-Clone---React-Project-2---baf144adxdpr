@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable max-len */
 /* eslint-disable quote-props */
 /* eslint-disable operator-linebreak */
@@ -38,7 +39,16 @@ instance.interceptors.request.use(
         Authorization: `Bearer ${userTokenCookie}`,
       }
     }
-
+    const excludedEndpoints = '/linkedin/post'
+    const configURL = config.url
+    if (!configURL.includes(excludedEndpoints)) {
+      if (typeof window !== 'undefined') {
+        const loader: HTMLElement | null = document.getElementById('cover-spin')
+        if (loader !== null) {
+          loader.style.display = 'block'
+        }
+      }
+    }
     return config
   },
   async (error: any) => {
@@ -49,9 +59,21 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   (response: any) => {
+    if (typeof window !== 'undefined') {
+      const loader: HTMLElement | null = document.getElementById('cover-spin')
+      if (loader !== null) {
+        loader.style.display = 'none'
+      }
+    }
     return response
   },
   async (error: any) => {
+    if (typeof window !== 'undefined') {
+      const loader: HTMLElement | null = document.getElementById('cover-spin')
+      if (loader !== null) {
+        loader.style.display = 'none'
+      }
+    }
     return await Promise.reject(error)
   },
 )

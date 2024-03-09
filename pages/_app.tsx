@@ -6,6 +6,7 @@ import {Provider} from 'react-redux'
 import {store} from '../store/store'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Loader from './loader'
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
@@ -21,6 +22,7 @@ export default function App({
         <Component {...pageProps} />
         <ToastContainer />
       </Provider>
+      <Loader />
     </main>
   )
 }

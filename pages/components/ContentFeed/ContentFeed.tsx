@@ -21,26 +21,25 @@ import ImageCarousel from './ImageCarousel'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import CommentBox from './CommentBox'
-import MoreIcon from '@mui/icons-material/MoreVert'
-import ShareBoxModal from '../ShareBoxFeed/ShareBoxModal'
-
+// import MoreIcon from '@mui/icons-material/MoreVert'
+// import ShareBoxModal from '../ShareBoxFeed/ShareBoxModal'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 interface PostProps {
   readonly feedContent: PostTypes[]
   setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
   index: number
-  open: boolean
-  handleOpen: () => void
-  handleClose: () => void
+  // open: boolean
+  // handleOpen: () => void
+  // handleClose: () => void
 }
 
 function ContentFeed({
   feedContent,
   setFeedContent,
-  index,
-  open,
-  handleOpen,
-  handleClose,
-}: Readonly<PostProps>): React.JSX.Element {
+  index, // open,
+} // handleOpen,
+// handleClose,
+: Readonly<PostProps>): React.JSX.Element {
   const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
     {},
   )
@@ -50,11 +49,11 @@ function ContentFeed({
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-  const [postDetails, setPostDetails] = useState<PostTypes>()
+  // const [postDetails, setPostDetails] = useState<PostTypes>()
   const mobileMenuId = 'primary-search-account-menu-mobile'
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-    setMobileMoreAnchorEl(event.currentTarget)
-  }
+  // const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+  //   setMobileMoreAnchorEl(event.currentTarget)
+  // }
   const handleMobileMenuClose = (): void => {
     setMobileMoreAnchorEl(null)
   }
@@ -69,15 +68,26 @@ function ContentFeed({
     try {
       const response: any = await ApiUtils.upvotePost(`/${postId}`)
       ToasterMessage('success', response?.message)
-      const getPostResponse: any = await ApiUtils.getPosts(
-        `?limit=10&page=${index}`,
-      )
-      setFeedContent(prevItems => [...prevItems, ...getPostResponse.data])
-      //  setFeedContent(getPostResponse.data)
+
+      const updatedFeedContent = feedContent.map((newPost: any) => {
+        if (newPost._id === postId) {
+          // If the post ID matches, update the post in the feed
+          return {
+            ...newPost,
+            isLiked: true,
+            likeCount: newPost.likeCount + 1,
+          }
+        }
+        return newPost // Return the post as it is if ID doesn't match
+      })
+
+      // Set the updated feed content
+      setFeedContent(updatedFeedContent)
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
     }
   }
+
   const handleDeletePost = async (postId: string): Promise<void> => {
     try {
       await ApiUtils.deletePost(`/${postId}`)
@@ -92,13 +102,13 @@ function ContentFeed({
   }
   const openEditPostModal = (post: PostTypes): void => {
     console.log('🚀 ~ openEditPostModal ~ post:', post)
-    setPostDetails(post)
-    handleOpen()
+    // setPostDetails(post)
+    // handleOpen()
   }
   return (
     <>
       {feedContent?.length > 0
-        ? feedContent?.map((content: any) => {
+        ? feedContent?.map((content: PostTypes) => {
             const showMore = showMoreStates[content._id] || false
             const showComments = showCommentsStates[content._id] || false
 
@@ -125,14 +135,14 @@ function ContentFeed({
                   }}
                   className="content_feed_header">
                   <Box component="span" sx={{fontSize: '14px'}}>
-                    New Post
+                    {content?.title}
                   </Box>
-                  <MoreIcon
+                  {/* <MoreIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
                     onClick={(e: any) => {
                       handleMobileMenuOpen(e)
                     }}
-                  />
+                  /> */}
                 </Box>
                 <Menu
                   anchorEl={mobileMoreAnchorEl}
@@ -309,7 +319,11 @@ function ContentFeed({
                         gap: '3px',
                       }}>
                       <ThumbUpOffAltIcon
-                        sx={{color: '#5E5E5E', fontSize: '16px'}}
+                        sx={{
+                          color: '#5E5E5E',
+                          fontSize: '16px',
+                          transform: 'scaleX(-1)',
+                        }}
                       />
                       <Typography
                         component="span"
@@ -359,8 +373,16 @@ function ContentFeed({
                         background: 'rgba(0,0,0,0.08)',
                       },
                     }}>
-                    <ThumbUpOffAltIcon sx={{color: '#5E5E5E'}} />
-                    <span>Like</span>
+                    {content?.isLiked ? (
+                      <ThumbUpIcon
+                        sx={{color: '#1976D2', transform: 'scaleX(-1)'}}
+                      />
+                    ) : (
+                      <ThumbUpOffAltIcon
+                        sx={{color: '#5E5E5E', transform: 'scaleX(-1)'}}
+                      />
+                    )}
+                    <span>{content?.isLiked ? 'Liked' : 'Like'}</span>
                   </Button>
                   <Button
                     sx={{
@@ -368,11 +390,15 @@ function ContentFeed({
                       ':hover': {
                         background: 'rgba(0,0,0,0.08)',
                       },
+                    }}
+                    onClick={() => {
+                      handleShowComments(content._id)
                     }}>
                     <CommentIcon sx={{color: '#5E5E5E'}} />
                     <span>Comment</span>
                   </Button>
                   <Button
+                    disabled
                     sx={{
                       padding: '13px',
                       ':hover': {
@@ -383,6 +409,7 @@ function ContentFeed({
                     <span>Repost</span>
                   </Button>
                   <Button
+                    disabled
                     sx={{
                       padding: '13px',
                       ':hover': {
@@ -393,17 +420,24 @@ function ContentFeed({
                     <span>Send</span>
                   </Button>
                 </Box>
-                {showComments && <CommentBox contentId={content?._id} />}
+                {showComments && (
+                  <CommentBox
+                    contentId={content?._id}
+                    setFeedContent={setFeedContent}
+                    feedContent={feedContent}
+                    isSinglePostComment={false}
+                  />
+                )}
               </Box>
             )
           })
         : ''}
-      <ShareBoxModal
+      {/* <ShareBoxModal
         postDetails={postDetails}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         setFeedContent={setFeedContent}
-      />
+      /> */}
     </>
   )
 }
