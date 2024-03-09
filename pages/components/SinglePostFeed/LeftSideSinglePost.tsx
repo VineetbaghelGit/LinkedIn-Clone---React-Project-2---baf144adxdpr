@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 import {type PostTypes} from '@/components/utils/TypeConfig'
 import {Box, Stack, Typography} from '@mui/material'

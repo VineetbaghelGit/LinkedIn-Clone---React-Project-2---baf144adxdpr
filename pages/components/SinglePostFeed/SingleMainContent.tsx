@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable max-len */
 /* eslint-disable prettier/prettier */
 import {Box, Button, Typography} from '@mui/material'
