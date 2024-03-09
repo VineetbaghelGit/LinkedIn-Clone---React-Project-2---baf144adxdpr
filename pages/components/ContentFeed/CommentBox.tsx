@@ -18,9 +18,17 @@ import EditIcon from '@mui/icons-material/Edit'
 import {LoggedInUserId} from '@/components/utils/SelectorConfig'
 interface CommentBoxProps {
   contentId: string
+  feedContent?: any
+  setFeedContent: React.Dispatch<React.SetStateAction<any>>
+  isSinglePostComment: boolean
 }
 
-function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
+function CommentBox({
+  contentId,
+  feedContent,
+  setFeedContent,
+  isSinglePostComment,
+}: Readonly<CommentBoxProps>): React.JSX.Element {
   const [userComments, setUserComments] = useState<CommentsDataTypes[]>([])
   const [commentInputValue, setCommentInputValue] = useState('')
   const [commentEditMode, setCommentEditMode] = useState(false)
@@ -59,6 +67,26 @@ function CommentBox({contentId}: Readonly<CommentBoxProps>): React.JSX.Element {
       } else {
         const response: any = await ApiUtils.postComment(body, contentId)
         ToasterMessage('success', response?.message)
+
+        if (isSinglePostComment) {
+          const updatedContent = {
+            ...feedContent,
+            commentCount: feedContent.commentCount + 1,
+          }
+          setFeedContent(updatedContent)
+        } else {
+          const updatedFeedContent = feedContent.map((newPost: any) => {
+            if (newPost._id === contentId) {
+              return {
+                ...newPost,
+                commentCount: newPost.commentCount + 1,
+              }
+            }
+            return newPost
+          })
+
+          setFeedContent(updatedFeedContent)
+        }
       }
 
       setCommentInputValue('')

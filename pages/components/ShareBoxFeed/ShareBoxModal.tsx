@@ -4,7 +4,7 @@
 /* eslint-disable max-len */
 /* eslint-disable quote-props */
 /* eslint-disable quotes */
-import {Box, Button, Divider, TextField} from '@mui/material'
+import {Box, Button, Divider, FormControl, TextField} from '@mui/material'
 import Image from 'next/image'
 import React, {type ChangeEvent, useEffect, useRef, useState} from 'react'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
@@ -22,38 +22,42 @@ import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import {type PostTypes} from '@/components/utils/TypeConfig'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 620,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  borderRadius: '0.8rem',
-  p: 4,
-  height: '90vh',
-  ':focus-visible': {
-    outline: 'none',
-  },
-}
+import InputTextField from '../InputField/InputTextField'
 
 interface ShareModalProps {
   postDetails?: PostTypes
   open: boolean
   onClose: () => void
   setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
+  postType: string
 }
 const ShareBoxModal: React.FC<ShareModalProps> = ({
   postDetails,
   open,
   onClose,
   setFeedContent,
+  postType,
 }) => {
+  const style = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 620,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: '0.8rem',
+    p: 4,
+    height: postType === 'media' ? '90vh' : '80vh',
+    ':focus-visible': {
+      outline: 'none',
+    },
+  }
   const [inputValue, setInputValue] = useState<string>(
     postDetails?.content ?? '',
   )
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
+  const [inputTitle, setInputTitle] = React.useState('')
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
   const [imagePreviews, setImagePreviews] = useState<string[]>(
     postDetails?.images ?? [],
@@ -140,7 +144,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
         selectedFiles.forEach(file => {
           formData.append(`images`, file)
         })
-        formData.append('title', 'Title3')
+        formData.append('title', inputTitle)
         formData.append('content', inputValue)
         const response: any = await ApiUtils.createPost(formData)
         const getPostResponse: any = await ApiUtils.getPosts(`?limit=10&page=1`)
@@ -149,6 +153,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
         ToasterMessage('success', response?.message)
         onClose()
         setInputValue('')
+        setInputTitle('')
         setSelectedFiles([])
         setImagePreviews([])
       } catch (err: any) {
@@ -232,10 +237,26 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
           </Box>
 
           <Box className="share_text_editor" sx={{margin: '0.7rem 1rem'}}>
+            <FormControl
+              sx={{
+                marginBottom: '16px',
+                width: '100%',
+              }}>
+              <InputTextField
+                id="title"
+                name="title"
+                label="Post Title"
+                type="text"
+                value={inputTitle}
+                onChange={e => {
+                  setInputTitle(e.target.value)
+                }}
+              />
+            </FormControl>
             <TextField
               variant="standard"
               multiline
-              rows={imagePreviews.length > 0 ? 6 : 9}
+              rows={imagePreviews.length > 0 ? 3 : 5}
               value={inputValue}
               InputProps={{
                 disableUnderline: true,
@@ -324,103 +345,106 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
               </div>
             )}
           </Box>
-          <Box className="share_text_editor" sx={{margin: '0.7rem 0.2rem'}}>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-              }}>
-              <Box sx={{marginRight: '14px'}}>
-                <label htmlFor="upload" className="cursor-pointer">
-                  <Box
-                    component="span"
-                    sx={{
-                      borderRadius: '50%',
-                      padding: '0.7rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      background: '#f4f2ee',
-                      ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
-                        cursor: 'pointer',
-                      },
-                    }}>
-                    <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
-                  </Box>
-                </label>
-                <input
-                  id="upload"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{display: 'none'}}
-                  onChange={handleFileChange}
-                />
-              </Box>
-              <Box sx={{marginRight: '14px'}}>
-                <label htmlFor="upload" className="cursor-pointer">
-                  <Box
-                    component="span"
-                    sx={{
-                      borderRadius: '50%',
-                      padding: '0.7rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      background: '#f4f2ee',
-                      ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
-                        cursor: 'pointer',
-                      },
-                    }}>
-                    <CalendarMonthIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
-                  </Box>
-                </label>
-                <input
-                  id="upload"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{display: 'none'}}
-                  onChange={handleFileChange}
-                />
-              </Box>
-              <Box sx={{marginRight: '14px'}}>
-                <label htmlFor="upload" className="cursor-pointer">
-                  <Box
-                    component="span"
-                    sx={{
-                      borderRadius: '50%',
-                      padding: '0.7rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      background: '#f4f2ee',
-                      ':hover': {
-                        boxShadow:
-                          '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
-                        cursor: 'pointer',
-                      },
-                    }}>
-                    <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
-                  </Box>
-                </label>
-                <input
-                  id="upload"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{display: 'none'}}
-                  onChange={handleFileChange}
-                />
+          {postType === 'media' && (
+            <Box className="share_text_editor" sx={{margin: '0.7rem 0.2rem'}}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
+                <Box sx={{marginRight: '14px'}}>
+                  <label htmlFor="upload" className="cursor-pointer">
+                    <Box
+                      component="span"
+                      sx={{
+                        borderRadius: '50%',
+                        padding: '0.7rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        background: '#f4f2ee',
+                        ':hover': {
+                          boxShadow:
+                            '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                          cursor: 'pointer',
+                        },
+                      }}>
+                      <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                    </Box>
+                  </label>
+                  <input
+                    id="upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    style={{display: 'none'}}
+                    onChange={handleFileChange}
+                  />
+                </Box>
+                <Box sx={{marginRight: '14px'}}>
+                  <label htmlFor="upload" className="cursor-pointer">
+                    <Box
+                      component="span"
+                      sx={{
+                        borderRadius: '50%',
+                        padding: '0.7rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        background: '#f4f2ee',
+                        ':hover': {
+                          boxShadow:
+                            '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                          cursor: 'pointer',
+                        },
+                      }}>
+                      <CalendarMonthIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                    </Box>
+                  </label>
+                  <input
+                    id="upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    style={{display: 'none'}}
+                    onChange={handleFileChange}
+                  />
+                </Box>
+                <Box sx={{marginRight: '14px'}}>
+                  <label htmlFor="upload" className="cursor-pointer">
+                    <Box
+                      component="span"
+                      sx={{
+                        borderRadius: '50%',
+                        padding: '0.7rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        background: '#f4f2ee',
+                        ':hover': {
+                          boxShadow:
+                            '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
+                          cursor: 'pointer',
+                        },
+                      }}>
+                      <InsertPhotoIcon sx={{color: 'rgb(0 0 0/0.6)'}} />
+                    </Box>
+                  </label>
+                  <input
+                    id="upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    style={{display: 'none'}}
+                    onChange={handleFileChange}
+                  />
+                </Box>
               </Box>
             </Box>
-          </Box>
-          <Divider light={true} sx={{my: '10px'}} />
+          )}
+
+          {/* <Divider light={true} sx={{my: '10px'}} /> */}
           <Box
             sx={{
-              marginTop: '7px',
+              marginTop: '1px',
               display: 'flex',
               justifyContent: 'flex-end',
             }}>
@@ -429,10 +453,10 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
               variant="contained"
               onClick={handleCreatePost}
               sx={{
-                height: '35px',
+                height: '25px',
                 overflow: 'hidden',
                 padding: '0 18px',
-                borderRadius: '28px',
+                borderRadius: '18px',
                 background: '#0a66c2',
                 ':hover': {
                   background: '#004182',

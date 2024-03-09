@@ -234,6 +234,7 @@ export default function AuthHeader(): React.JSX.Element {
       onClose={handleMobileMenuClose}>
       <MenuItem>
         <IconButton
+          disabled
           size="large"
           aria-label="show 4 new mails"
           className="header_icon"
@@ -245,6 +246,7 @@ export default function AuthHeader(): React.JSX.Element {
       <MenuItem>
         <IconButton
           size="large"
+          disabled
           aria-label="show 4 new mails"
           className="header_icon"
           color="inherit">
@@ -254,6 +256,7 @@ export default function AuthHeader(): React.JSX.Element {
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
+          disabled
           size="large"
           aria-label="show 4 new mails"
           className="header_icon"
@@ -265,10 +268,11 @@ export default function AuthHeader(): React.JSX.Element {
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
+          disabled
           aria-label="show 17 new notifications"
           className="header_icon"
           color="inherit">
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={0} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -330,6 +334,7 @@ export default function AuthHeader(): React.JSX.Element {
                 </Link>
 
                 <IconButton
+                  disabled
                   size="large"
                   aria-label="show 4 new mails"
                   className="header_icon"
@@ -338,6 +343,7 @@ export default function AuthHeader(): React.JSX.Element {
                   <Typography variant="h5">Jobs</Typography>
                 </IconButton>
                 <IconButton
+                  disabled
                   size="large"
                   aria-label="show 4 new mails"
                   className="header_icon"
@@ -347,11 +353,12 @@ export default function AuthHeader(): React.JSX.Element {
                 </IconButton>
 
                 <IconButton
+                  disabled
                   size="large"
                   aria-label="show 17 new notifications"
                   className="header_icon"
                   color="inherit">
-                  <Badge badgeContent={17} color="error">
+                  <Badge badgeContent={0} color="error">
                     <NotificationsIcon />
                   </Badge>
                   <Typography variant="h5">Notifications</Typography>
