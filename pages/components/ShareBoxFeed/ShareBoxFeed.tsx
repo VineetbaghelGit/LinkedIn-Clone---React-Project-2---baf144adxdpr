@@ -14,26 +14,27 @@ import ShareBoxModal from './ShareBoxModal'
 import {type PostTypes} from '@/components/utils/TypeConfig'
 import {LoggedInUserDetails} from '@/components/utils/SelectorConfig'
 interface ShareBoxFeedProps {
-  open: boolean
-  handleOpen: () => void
-  handleClose: () => void
+  // open: boolean
+  // handleOpen: () => void
+  // handleClose: () => void
   readonly setFeedContent: React.Dispatch<React.SetStateAction<PostTypes[]>>
 }
 function ShareBoxFeed({
-  open,
-  handleOpen,
-  handleClose,
+  // open,
+  // handleOpen,
+  // handleClose,
   setFeedContent,
 }: ShareBoxFeedProps): React.JSX.Element {
   const userDetails = LoggedInUserDetails()
-  // const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [postType, setPostType] = React.useState('')
 
-  // const handleOpen = (): void => {
-  //   setOpen(true)
-  // }
-  // const handleClose = (): void => {
-  //   setOpen(false)
-  // }
+  const handleOpen = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
+  }
 
   return (
     <Box
@@ -89,6 +90,10 @@ function ShareBoxFeed({
           paddingBottom: '0.8rem',
         }}>
         <Button
+          onClick={() => {
+            handleOpen()
+            setPostType('media')
+          }}
           sx={{
             padding: '13px 15px',
             ':hover': {
@@ -99,6 +104,7 @@ function ShareBoxFeed({
           <span>Media</span>
         </Button>
         <Button
+          disabled
           sx={{
             padding: '13px 15px',
             ':hover': {
@@ -109,6 +115,10 @@ function ShareBoxFeed({
           <span>Event</span>
         </Button>
         <Button
+          onClick={() => {
+            handleOpen()
+            setPostType('article')
+          }}
           sx={{
             padding: '13px 15px',
             ':hover': {
@@ -123,6 +133,7 @@ function ShareBoxFeed({
         open={open}
         onClose={handleClose}
         setFeedContent={setFeedContent}
+        postType={postType}
       />
     </Box>
   )

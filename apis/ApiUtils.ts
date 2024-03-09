@@ -69,6 +69,11 @@ const ApiUtils = {
       method: 'DELETE',
       endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
     }),
+  postById: async (params: string) =>
+    await genericApiCall({
+      method: 'GET',
+      endpoint: `${apiEndpoints.LINKEDIN_POST}${params}`,
+    }),
   createGroup: async (params: any) =>
     await genericApiCall({
       method: 'POST',

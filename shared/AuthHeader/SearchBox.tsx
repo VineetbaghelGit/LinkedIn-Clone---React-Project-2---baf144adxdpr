@@ -97,7 +97,7 @@ function SearchBox({
           <SearchIcon className="search_icon-header" />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="Search…"
+          placeholder="Enter author name for post search.."
           inputProps={{'aria-label': 'search'}}
           onChange={(e: any) => {
             setSearchInputValue(e.target.value)
@@ -116,6 +116,8 @@ function SearchBox({
             borderRadius: '0.4rem',
             width: '300px',
             padding: '10px 13px',
+            maxHeight: '400px',
+            overflowY: 'auto',
           }}>
           {searchedData.length > 0 ? (
             searchedData.map((data: PostTypes) => {
@@ -136,11 +138,12 @@ function SearchBox({
                       flexGrow: '1',
                       overflow: 'hidden',
                     }}>
-                    <Link
+                    {/* <Link
                       href={`/profile/${data?.author.name.replace(
                         /\s+/g,
                         '-',
-                      )}-${data?.author._id}`}>
+                      )}-${data?.author._id}`}> */}
+                    <Link href={`/post/${data?._id}`}>
                       <Box
                         component="span"
                         sx={{

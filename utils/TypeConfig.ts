@@ -12,6 +12,7 @@ export interface PostTypes {
   dislikeCount: number
   images: string[]
   likeCount: number
+  isLiked: boolean
   title: string
   _id: string
 }
