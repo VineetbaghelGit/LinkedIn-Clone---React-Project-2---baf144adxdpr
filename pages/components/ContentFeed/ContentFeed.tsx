@@ -37,8 +37,8 @@ function ContentFeed({
   feedContent,
   setFeedContent,
   index, // open,
+  // handleClose,
 } // handleOpen,
-// handleClose,
 : Readonly<PostProps>): React.JSX.Element {
   const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
     {},
@@ -134,9 +134,9 @@ function ContentFeed({
                     justifyContent: 'space-between',
                   }}
                   className="content_feed_header">
-                  <Box component="span" sx={{fontSize: '14px'}}>
+                  {/* <Box component="span" sx={{fontSize: '14px'}}>
                     {content?.title}
-                  </Box>
+                  </Box> */}
                   {/* <MoreIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
                     onClick={(e: any) => {
@@ -257,6 +257,15 @@ function ContentFeed({
                     marginRight: '0.8rem',
                     marginLeft: '0.8rem',
                   }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '550',
+                      margin: '0 0.8rem 1rem 0.2rem',
+                    }}>
+                    {content?.title}
+                  </Box>
                   <Box
                     sx={{
                       margin: '0 0.8rem 1rem 0.2rem',

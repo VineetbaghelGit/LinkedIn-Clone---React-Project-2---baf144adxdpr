@@ -340,7 +340,7 @@ export default function AuthHeader(): React.JSX.Element {
                   className="header_icon"
                   color="inherit">
                   <Work />
-                  <Typography variant="h5">Jobs</Typography>
+                  <Typography variant="h5">Coming Soon</Typography>
                 </IconButton>
                 <IconButton
                   disabled
@@ -349,7 +349,7 @@ export default function AuthHeader(): React.JSX.Element {
                   className="header_icon"
                   color="inherit">
                   <Message />
-                  <Typography variant="h5">Messaging</Typography>
+                  <Typography variant="h5">Coming Soon</Typography>
                 </IconButton>
 
                 <IconButton
@@ -361,7 +361,7 @@ export default function AuthHeader(): React.JSX.Element {
                   <Badge badgeContent={0} color="error">
                     <NotificationsIcon />
                   </Badge>
-                  <Typography variant="h5">Notifications</Typography>
+                  <Typography variant="h5">Coming Soon</Typography>
                 </IconButton>
                 <IconButton
                   size="large"
