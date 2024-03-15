@@ -259,28 +259,30 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
           <CommentIcon sx={{color: '#5E5E5E'}} />
           <span>Comment</span>
         </Button>
-        <Button
-          disabled
-          sx={{
-            padding: '13px',
-            ':hover': {
-              background: 'rgba(0,0,0,0.08)',
-            },
-          }}>
-          <ReplyAllIcon sx={{color: '#5E5E5E'}} />
-          <span>Repost</span>
-        </Button>
-        <Button
-          disabled
-          sx={{
-            padding: '13px',
-            ':hover': {
-              background: 'rgba(0,0,0,0.08)',
-            },
-          }}>
-          <SendIcon sx={{color: '#5E5E5E'}} />
-          <span>Send</span>
-        </Button>
+        <Link href="coming-soon">
+          <Button
+            sx={{
+              padding: '13px',
+              ':hover': {
+                background: 'rgba(0,0,0,0.08)',
+              },
+            }}>
+            <ReplyAllIcon sx={{color: '#5E5E5E'}} />
+            <span>Repost</span>
+          </Button>
+        </Link>
+        <Link href="/coming-soon">
+          <Button
+            sx={{
+              padding: '13px',
+              ':hover': {
+                background: 'rgba(0,0,0,0.08)',
+              },
+            }}>
+            <SendIcon sx={{color: '#5E5E5E'}} />
+            <span>Send</span>
+          </Button>
+        </Link>
       </Box>
       {showComments && (
         <CommentBox

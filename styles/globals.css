@@ -375,3 +375,26 @@ padding: 9.5px;
 	 animation: spin 0.8s linear infinite;
 }
  
+.coming-soon-wrapper{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  animation: fadeIn 1000ms ease;
+  -webkit-animation: fadeIn 1000ms ease;
+  
+}
+
+.coming-soon-wrapper h1 {
+  font-size: 64px;
+  margin-bottom: 0;
+  line-height: 1;
+  font-weight: 700;
+  color: #1976D2;
+}
+.coming-soon-wrapper p{
+  text-align: center;
+  margin: 18px;
+  font-weight: normal;
+}

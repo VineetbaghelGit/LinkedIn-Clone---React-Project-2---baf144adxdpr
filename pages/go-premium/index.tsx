@@ -5,6 +5,7 @@ import React from 'react'
 import LinkdeinLearning from '@/components/images/linkedin_learning.jpg'
 import LinkedinInmails from '@/components/images/linkedin_inmails.jpg'
 import LinkedinOpportunity from '@/components/images/linkedin_opportunity.jpg'
+import Link from 'next/link'
 
 function GoPremium(): React.JSX.Element {
   return (
@@ -39,19 +40,21 @@ function GoPremium(): React.JSX.Element {
                 resource to help with your search.
               </Typography>{' '}
             </Typography>
-            <Button
-              variant="outlined"
-              sx={{
-                margin: '1rem 0',
-                height: '34px',
-                overflow: 'hidden',
-                padding: '10px',
-                fontSize: '12px',
-                color: '#0a66c2',
-                mb: '0px',
-              }}>
-              TRY NOW
-            </Button>
+            <Link href="/coming-soon">
+              <Button
+                variant="outlined"
+                sx={{
+                  margin: '1rem 0',
+                  height: '34px',
+                  overflow: 'hidden',
+                  padding: '10px',
+                  fontSize: '12px',
+                  color: '#0a66c2',
+                  mb: '0px',
+                }}>
+                TRY NOW
+              </Button>
+            </Link>
           </Box>
           <Box sx={{my: '10px'}}>
             <Box

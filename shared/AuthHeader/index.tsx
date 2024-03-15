@@ -149,18 +149,18 @@ export default function AuthHeader(): React.JSX.Element {
         Account
       </Typography>
       <Typography sx={{fontSize: '14px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Settings & Privacy
         </Link>
       </Typography>
       <Typography sx={{fontSize: '14px', marginTop: '6px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Help
         </Link>
       </Typography>
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Language
         </Link>
       </Typography>
@@ -179,18 +179,18 @@ export default function AuthHeader(): React.JSX.Element {
         Manage
       </Typography>
       <Typography sx={{fontSize: '14px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Posts & Activity
         </Link>
       </Typography>
       <Typography sx={{fontSize: '14px', marginTop: '6px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Company
         </Link>
       </Typography>
       <Typography
         sx={{fontSize: '14px', marginTop: '6px', marginBottom: '10px'}}>
-        <Link href="#" className="dropdown-menu">
+        <Link href="/coming-soon" className="dropdown-menu">
           Company
         </Link>
       </Typography>
@@ -332,37 +332,38 @@ export default function AuthHeader(): React.JSX.Element {
                     <Typography variant="h5">Groups</Typography>
                   </IconButton>
                 </Link>
-
-                <IconButton
-                  disabled
-                  size="large"
-                  aria-label="show 4 new mails"
-                  className="header_icon"
-                  color="inherit">
-                  <Work />
-                  <Typography variant="h5">Coming Soon</Typography>
-                </IconButton>
-                <IconButton
-                  disabled
-                  size="large"
-                  aria-label="show 4 new mails"
-                  className="header_icon"
-                  color="inherit">
-                  <Message />
-                  <Typography variant="h5">Coming Soon</Typography>
-                </IconButton>
-
-                <IconButton
-                  disabled
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  className="header_icon"
-                  color="inherit">
-                  <Badge badgeContent={0} color="error">
-                    <NotificationsIcon />
-                  </Badge>
-                  <Typography variant="h5">Coming Soon</Typography>
-                </IconButton>
+                <Link href="/coming-soon">
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    className="header_icon"
+                    color="inherit">
+                    <Work />
+                    <Typography variant="h5">Jobs</Typography>
+                  </IconButton>
+                </Link>
+                <Link href="/coming-soon">
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    className="header_icon"
+                    color="inherit">
+                    <Message />
+                    <Typography variant="h5">Messages</Typography>
+                  </IconButton>
+                </Link>
+                <Link href="/coming-soon">
+                  <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    className="header_icon"
+                    color="inherit">
+                    <Badge badgeContent={0} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                    <Typography variant="h5">Notifications</Typography>
+                  </IconButton>
+                </Link>
                 <IconButton
                   size="large"
                   edge="end"

@@ -75,7 +75,7 @@ function LeftAside(): React.JSX.Element {
               },
             }}>
             <Link
-              href="#"
+              href="/coming-soon"
               underline="none"
               sx={{
                 color: 'gray',
@@ -96,7 +96,7 @@ function LeftAside(): React.JSX.Element {
               },
             }}>
             <Link
-              href="#"
+              href="/coming-soon"
               underline="none"
               sx={{
                 color: 'gray',
@@ -120,7 +120,7 @@ function LeftAside(): React.JSX.Element {
               },
             }}>
             <Link
-              href="#"
+              href="/go-premium"
               sx={{
                 color: 'rgb(0 0 0/.9)',
               }}
@@ -174,7 +174,7 @@ function LeftAside(): React.JSX.Element {
                   marginTop: '4px',
                 }}>
                 <Link
-                  href="#"
+                  href="/coming-soon"
                   underline="none"
                   sx={{
                     color: 'gray',
@@ -213,7 +213,7 @@ function LeftAside(): React.JSX.Element {
                   marginTop: '4px',
                 }}>
                 <Link
-                  href="#"
+                  href="/coming-soon"
                   underline="none"
                   sx={{
                     color: 'gray',
