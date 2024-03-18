@@ -216,7 +216,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
                     textTransform: 'capitalize',
                     marginLeft: '0.8rem',
                   }}>
-                  Vineet Baghel
+                  {userDetails?.name}
                 </Box>
                 <Box
                   component="span"
