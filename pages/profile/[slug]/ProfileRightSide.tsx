@@ -78,7 +78,7 @@ function ProfileRightSide(): React.JSX.Element {
                   fontWeight: '500',
                   fontSize: '12px',
                 }}>
-                https://linked-in-clone-react-project-2-baf144adxdpr-kex4.vercel.app/
+                https://linked-in-clone-react-project-2-baf144adxdpr-kex4.vercel.app
                 {pathname}
               </Typography>
             </Box>

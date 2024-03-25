@@ -26,6 +26,11 @@ export interface CommentsDataTypes {
   parentComment: string | null
   post: string
   __v: number
+  author_details: {
+    _id: string
+    name: string
+    profileImage: string
+  }
 }
 export interface AddressType {
   city: string

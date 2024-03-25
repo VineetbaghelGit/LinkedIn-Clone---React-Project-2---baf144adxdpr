@@ -196,7 +196,7 @@ function CommentBox({
                   }}>
                   <Box className="border_radius-50">
                     <Image
-                      src={DefaultUserImg}
+                      src={data?.author_details?.profileImage ?? DefaultUserImg}
                       height={35}
                       width={35}
                       alt="user_profile"
@@ -214,7 +214,11 @@ function CommentBox({
                       justifyContent: 'space-between',
                     }}>
                     <Box>
-                      <Link href="/profile">
+                      <Link
+                        href={`/profile/${data?.author_details.name?.replace(
+                          /\s+/g,
+                          '-',
+                        )}-${data?.author_details?._id}`}>
                         <Box
                           component="span"
                           sx={{
@@ -223,8 +227,7 @@ function CommentBox({
                             fontWeight: '550',
                             fontSize: '13px',
                           }}>
-                          {/* {content?.author?.name} */}
-                          Vineet Baghel
+                          {data?.author_details?.name}
                         </Box>
                         <Box
                           component="p"
@@ -236,7 +239,7 @@ function CommentBox({
                             whiteSpace: 'nowrap',
                             fontSize: '11px',
                           }}>
-                          Sr Test Automation Engineer at Accolite Digital
+                          {/* Sr Test Automation Engineer at Accolite Digital */}
                         </Box>
                         <Box
                           component="span"
