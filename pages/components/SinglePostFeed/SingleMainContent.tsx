@@ -5,7 +5,7 @@
 /* eslint-disable prettier/prettier */
 import {Box, Button, Typography} from '@mui/material'
 import Image from 'next/image'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Link from 'next/link'
 import ImageCarousel from '../ContentFeed/ImageCarousel'
@@ -45,7 +45,9 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
     }
   }
   const showComments = showCommentsStates[content?._id] || false
-
+  useEffect(() => {
+    setFeedContent(content)
+  }, [content])
   return (
     <Box
       id="content_feed"
@@ -68,9 +70,9 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
           justifyContent: 'space-between',
         }}
         className="content_feed_header">
-        <Box component="span" sx={{fontSize: '14px'}}>
+        {/* <Box component="span" sx={{fontSize: '14px'}}>
           {feedContent?.title}
-        </Box>
+        </Box> */}
         {/* <MoreIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
                     onClick={(e: any) => {
@@ -147,6 +149,15 @@ function SingleMainContent({content}: PostProps): React.JSX.Element {
           marginRight: '0.8rem',
           marginLeft: '0.8rem',
         }}>
+        <Box
+          component="span"
+          sx={{
+            fontSize: '14px',
+            fontWeight: '550',
+            margin: '0 0.8rem 1rem 0.2rem',
+          }}>
+          {content?.title}
+        </Box>
         <Box
           sx={{
             margin: '0 0.8rem 1rem 0.2rem',

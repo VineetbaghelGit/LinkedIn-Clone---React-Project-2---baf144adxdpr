@@ -80,6 +80,7 @@ function LeftAside(): React.JSX.Element {
               sx={{
                 color: 'gray',
                 display: 'flex',
+                cursor: 'not-allowed',
                 justifyContent: 'space-between',
               }}>
               <span>Profile viewers</span>
@@ -102,6 +103,7 @@ function LeftAside(): React.JSX.Element {
                 color: 'gray',
                 display: 'flex',
                 justifyContent: 'space-between',
+                cursor: 'not-allowed',
               }}>
               <span>Post impressions</span>
               <span style={{color: '#0a66c2', fontWeight: '550'}}>24</span>
@@ -179,6 +181,7 @@ function LeftAside(): React.JSX.Element {
                   sx={{
                     color: 'gray',
                     display: 'flex',
+                    cursor: 'not-allowed',
                     justifyContent: 'space-between',
                     gap: '10px',
                   }}>
@@ -219,6 +222,7 @@ function LeftAside(): React.JSX.Element {
                     color: 'gray',
                     display: 'flex',
                     justifyContent: 'space-between',
+                    cursor: 'not-allowed',
                     gap: '10px',
                   }}>
                   <span>Post impressions</span>

@@ -1,15 +1,16 @@
+/* eslint-disable max-len */
 /* eslint-disable operator-linebreak */
 /* eslint-disable prettier/prettier */
 /* eslint-disable indent */
 import React, {useEffect, useState} from 'react'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
+// import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import {Box, CardHeader, IconButton, Menu, MenuItem} from '@mui/material'
-import MoreIcon from '@mui/icons-material/MoreVert'
+import {Box, CardHeader} from '@mui/material'
+// import MoreIcon from '@mui/icons-material/MoreVert'
 
 import Image from 'next/image'
 import CreateGrpModal from './CreateGrpModal'
@@ -27,34 +28,35 @@ interface GroupData {
 function GroupsList(): React.JSX.Element {
   const [open, setOpen] = React.useState(false)
   const [groupListData, setGroupListData] = useState<GroupData[]>([])
+  console.log('🚀 ~ GroupsList ~ groupListData:', groupListData)
   const handleOpen = (): void => {
     setOpen(true)
   }
   const handleClose = (): void => {
     setOpen(false)
   }
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null)
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+  //   React.useState<null | HTMLElement>(null)
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-  const mobileMenuId = 'primary-search-account-menu-mobile'
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-    setMobileMoreAnchorEl(event.currentTarget)
-  }
-  const handleMobileMenuClose = (): void => {
-    setMobileMoreAnchorEl(null)
-  }
+  // const mobileMenuId = 'primary-search-account-menu-mobile'
+  // const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+  //   setMobileMoreAnchorEl(event.currentTarget)
+  // }
+  // const handleMobileMenuClose = (): void => {
+  //   setMobileMoreAnchorEl(null)
+  // }
 
-  const deleteGroup = async (groupId: string): Promise<void> => {
-    try {
-      await ApiUtils.deleteGroup(`/${groupId}`)
-      setMobileMoreAnchorEl(null)
-      ToasterMessage('success', 'Group deleted successfully')
-      void fetchGroupList()
-    } catch (err: any) {
-      ToasterMessage('error', err?.response?.data.message)
-    }
-  }
+  // const deleteGroup = async (groupId: string): Promise<void> => {
+  //   try {
+  //     await ApiUtils.deleteGroup(`/${groupId}`)
+  //     setMobileMoreAnchorEl(null)
+  //     ToasterMessage('success', 'Group deleted successfully')
+  //     void fetchGroupList()
+  //   } catch (err: any) {
+  //     ToasterMessage('error', err?.response?.data.message)
+  //   }
+  // }
   useEffect(() => {
     void fetchGroupList()
   }, [])
@@ -91,18 +93,19 @@ function GroupsList(): React.JSX.Element {
       />
 
       <CardContent>
-        {groupListData.length > 0
-          ? groupListData.map((data, index) => (
-              <React.Fragment key={index}>
+        {groupListData?.length > 0
+          ? groupListData?.map((data, index) => (
+              <Box key={`${data._id}-${index}`}>
                 <Box
                   sx={{
                     display: 'flex',
                     gap: '10px',
+                    marginTop: '10px',
                   }}>
                   <Image
-                    src={data?.image.length > 0 ? data?.image : DefaultUserImg}
-                    width={50}
-                    height={50}
+                    src={data?.image?.length > 0 ? data?.image : DefaultUserImg}
+                    width={40}
+                    height={40}
                     className="profile-image"
                     alt="profile-image"
                   />{' '}
@@ -123,27 +126,25 @@ function GroupsList(): React.JSX.Element {
                       }}>
                       {data?.name}
                     </Typography>
-                    <CardActions>
+                    {/* <CardActions>
                       <IconButton
                         size="large"
                         aria-label="show more"
-                        aria-controls={mobileMenuId}
                         aria-haspopup="true"
                         onClick={handleMobileMenuOpen}
                         className="header_more_icon"
                         color="inherit">
                         <MoreIcon />
                       </IconButton>{' '}
-                    </CardActions>
+                    </CardActions> */}
                   </Box>
                 </Box>
-                <Menu
+                {/* <Menu
                   anchorEl={mobileMoreAnchorEl}
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  id={mobileMenuId}
                   keepMounted
                   transformOrigin={{
                     vertical: 'top',
@@ -163,13 +164,17 @@ function GroupsList(): React.JSX.Element {
                       Delete
                     </Typography>
                   </MenuItem>
-                </Menu>
-              </React.Fragment>
+                </Menu> */}
+              </Box>
             ))
           : 'No data'}
       </CardContent>
 
-      <CreateGrpModal open={open} onClose={handleClose} />
+      <CreateGrpModal
+        open={open}
+        onClose={handleClose}
+        setGroupListData={setGroupListData}
+      />
     </Card>
   )
 }

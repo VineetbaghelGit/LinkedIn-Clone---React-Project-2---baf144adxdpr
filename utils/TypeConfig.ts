@@ -79,3 +79,13 @@ export interface ApiResponseType {
   data: UserProfileType
   status: string
 }
+
+export interface GroupData {
+  createdAt: string
+  description: string
+  image: string
+  isEdited: boolean
+  name: string
+  __v: number
+  _id: string
+}
