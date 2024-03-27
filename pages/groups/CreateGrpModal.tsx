@@ -4,18 +4,19 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable quote-props */
 import {Box, Button, FormControl, Modal, Typography} from '@mui/material'
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import ApiUtils from '@/components/apis/ApiUtils'
 import InputTextField from '../components/InputField/InputTextField'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import DefaultPlaceholderImg from '../../images/default-placeholder.jpg'
-import Image from 'next/image'
-import CameraAltIcon from '@mui/icons-material/CameraAlt'
+// import DefaultPlaceholderImg from '../../images/default-placeholder.jpg'
+// import Image from 'next/image'
+// import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 interface CreateGrpModalProps {
   readonly open: boolean
   readonly onClose: () => void
+  readonly setGroupListData: any
 }
 const style = {
   position: 'absolute' as const,
@@ -27,7 +28,7 @@ const style = {
   boxShadow: 24,
   borderRadius: '0.8rem',
   p: 4,
-  height: '70vh',
+  height: '50vh',
   ':focus-visible': {
     outline: 'none',
   },
@@ -35,8 +36,9 @@ const style = {
 function CreateGrpModal({
   open,
   onClose,
+  setGroupListData,
 }: CreateGrpModalProps): React.JSX.Element {
-  const [imagePreview, setImagePreview] = useState('')
+  // const [imagePreview,setImagePreview] = useState('')
   const formValidationGroup = useFormik({
     initialValues: {
       title: '',
@@ -46,25 +48,27 @@ function CreateGrpModal({
     validationSchema: Yup.object().shape({
       title: Yup.string().required('Title is required'),
       description: Yup.string().required('Description is required'),
-      images: Yup.mixed()
-        .nullable()
-        .required()
-        .test('fileSize', 'Image is required', (value: any) => {
-          if (!value) {
-            return true
-          }
-          const maxFileSize = 5 * 1024 * 1024
-          return value.size <= maxFileSize
-        }),
+      // images: Yup.mixed()
+      //   .nullable()
+      //   .required()
+      //   .test('fileSize', 'Image is required', (value: any) => {
+      //     if (!value) {
+      //       return true
+      //     }
+      //     const maxFileSize = 5 * 1024 * 1024
+      //     return value.size <= maxFileSize
+      //   }),
     }),
     onSubmit: async value => {
       try {
         const formData = new FormData()
-        formData.append('images', value.images)
-        formData.append('title', value.title)
+        // formData.append('images', value.images)
+        formData.append('name', value.title)
         formData.append('description', value.description)
 
         const response: any = await ApiUtils.createGroup(formData)
+        const responseFetch: any = await ApiUtils.getGroupsList()
+        setGroupListData(responseFetch?.data)
         ToasterMessage('success', response?.message)
         onClose()
         formValidationGroup.resetForm()
@@ -73,19 +77,19 @@ function CreateGrpModal({
       }
     },
   })
-  const handleImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (e?.target?.files != null) {
-      void formValidationGroup.setFieldValue('images', e?.target?.files[0])
-      const objectUrl: string = URL.createObjectURL(e.target.files[0])
-      setImagePreview(objectUrl)
-    }
-  }
-  useEffect(() => {
-    if (open) {
-      formValidationGroup.resetForm()
-      setImagePreview('')
-    }
-  }, [open])
+  // const handleImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  //   if (e?.target?.files != null) {
+  //     void formValidationGroup.setFieldValue('images', e?.target?.files[0])
+  //     const objectUrl: string = URL.createObjectURL(e.target.files[0])
+  //     setImagePreview(objectUrl)
+  //   }
+  // }
+  // useEffect(() => {
+  //   if (open) {
+  //     formValidationGroup.resetForm()
+  //     setImagePreview('')
+  //   }
+  // }, [open])
   return (
     <Modal
       className="create_post_modal"
@@ -124,7 +128,7 @@ function CreateGrpModal({
                 marginBottom: '0px',
                 display: 'block',
               }}>
-              <div className="avatar-edit">
+              {/* <div className="avatar-edit">
                 <input
                   type="file"
                   id="imageUpload"
@@ -134,8 +138,8 @@ function CreateGrpModal({
                 <label htmlFor="imageUpload" className="image-upload-cam">
                   <CameraAltIcon />
                 </label>
-              </div>
-              <div className="avatar-preview">
+              </div> */}
+              {/* <div className="avatar-preview">
                 <Image
                   className="profile-user-img img-responsive img-circle"
                   id="imagePreview"
@@ -148,7 +152,7 @@ function CreateGrpModal({
                   width={100}
                   height={100}
                 />
-              </div>
+              </div> */}
               <Typography
                 sx={{
                   color: '#d32f2f',

@@ -7,6 +7,7 @@ import {store} from '../store/store'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loader from './loader'
+import Head from 'next/head'
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
@@ -18,6 +19,9 @@ export default function App({
 }: AppProps): React.JSX.Element {
   return (
     <main className={`${poppins.className}`}>
+      <Head>
+        <title>LinkedIn</title>
+      </Head>
       <Provider store={store}>
         <Component {...pageProps} />
         <ToastContainer />

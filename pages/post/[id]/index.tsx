@@ -15,9 +15,9 @@ function SinglePost(): React.JSX.Element {
   const id = useParams()
   const [feedContent, setFeedContent] = useState<any>(null)
   console.log('🚀 ~ SinglePost ~ feedContent:', feedContent)
-  async function fetchPostById(): Promise<void> {
+  async function fetchPostById(postId: string): Promise<void> {
     try {
-      const response: any = await ApiUtils.postById(`/${id?.id}`)
+      const response: any = await ApiUtils.postById(`/${postId}`)
       setFeedContent(response.data)
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
@@ -26,7 +26,7 @@ function SinglePost(): React.JSX.Element {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (id) {
-      void fetchPostById()
+      void fetchPostById(id.id as string)
     }
   }, [id])
   return (

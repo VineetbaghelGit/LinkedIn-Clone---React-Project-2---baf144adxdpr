@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable indent */
 /* eslint-disable max-len */
 /* eslint-disable prettier/prettier */
@@ -9,9 +10,9 @@ import InputBase from '@mui/material/InputBase'
 import React, {useEffect, useState} from 'react'
 import {Box, Typography} from '@mui/material'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
-import Link from 'next/link'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {type PostTypes} from '@/components/utils/TypeConfig'
+import {useRouter} from 'next/router'
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -54,15 +55,18 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 interface SearchBoxProps {
   onFocusedInput: () => void
   openBackdrop: boolean
+  handleCloseBackdrop: () => void
 }
 
 function SearchBox({
   onFocusedInput,
   openBackdrop,
+  handleCloseBackdrop,
 }: Readonly<SearchBoxProps>): React.JSX.Element {
   const [searchInputValue, setSearchInputValue] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [searchedData, setSearchedData] = useState<PostTypes[]>([])
+  const router = useRouter()
 
   useEffect(() => {
     if (!openBackdrop) {
@@ -71,7 +75,7 @@ function SearchBox({
     }
   }, [openBackdrop])
   useEffect(() => {
-    if (searchInputValue.length > 0) {
+    if (searchInputValue.trim().length > 0) {
       const fetchData = setTimeout(async () => {
         try {
           const response: any = await ApiUtils.searchFilter(
@@ -80,6 +84,9 @@ function SearchBox({
             )}`,
           )
           setSearchedData(response?.data)
+          if (response?.data?.length === 0) {
+            setErrorMsg('No result found')
+          }
         } catch (err: any) {
           setSearchedData([])
           setErrorMsg(err?.response?.data?.message)
@@ -88,8 +95,16 @@ function SearchBox({
       return () => {
         clearTimeout(fetchData)
       }
+    } else {
+      setErrorMsg('Type something for search')
     }
   }, [searchInputValue])
+  const handlePostRedirect = (postId: string): void => {
+    void router.push(`/post/${postId}`)
+    setSearchedData([])
+    setSearchInputValue('')
+    handleCloseBackdrop()
+  }
   return (
     <>
       <Search sx={{position: 'relative'}}>
@@ -143,18 +158,18 @@ function SearchBox({
                         /\s+/g,
                         '-',
                       )}-${data?.author._id}`}> */}
-                    <Link href={`/post/${data?._id}`}>
-                      <Box
-                        component="span"
-                        sx={{
-                          display: 'flex',
-                          color: 'rgb(0 0 0/0.8)',
-                          fontWeight: '550',
-                          fontSize: '13px',
-                        }}>
-                        {data?.title}
-                      </Box>
-                    </Link>
+                    <Box
+                      onClick={() => handlePostRedirect(data?._id)}
+                      component="span"
+                      sx={{
+                        display: 'flex',
+                        color: 'rgb(0 0 0/0.8)',
+                        fontWeight: '550',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                      }}>
+                      {data?.title}
+                    </Box>
                   </Box>
                   <Box className="border_radius-50">
                     <Image

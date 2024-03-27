@@ -22,7 +22,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -36,7 +37,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -50,7 +52,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -64,7 +67,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -78,7 +82,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -92,7 +97,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -106,7 +112,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -120,7 +127,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',
@@ -134,7 +142,8 @@ function MenuOptions(): React.JSX.Element {
         <Typography
           component="a"
           sx={{
-            cursor: 'pointer',
+            cursor: 'not-allowed',
+
             fontSize: '12px',
             fontWeight: '500',
             color: '#ACACAC',

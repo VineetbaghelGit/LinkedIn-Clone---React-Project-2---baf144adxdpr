@@ -11,14 +11,13 @@ import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Image from 'next/image'
 import logoLinkedin from '@/components/images/LinkedIn_icon.svg.png'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import {Home, Message, People, Work} from '@mui/icons-material'
-import {Button, Divider} from '@mui/material'
+import {Button, Divider, Modal} from '@mui/material'
 import Link from 'next/link'
 import {useAppDispatch} from '@/components/store/hooks'
 import {removeLoginToken} from '@/components/store/slices/auth/reducer'
@@ -32,10 +31,26 @@ import {
   removeLoggedInUserDetails,
   removeLoggedInUserId,
 } from '@/components/store/slices/user/reducer'
-
+import ForgetPassword from '@/components/pages/components/ForgetPassword'
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 620,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  borderRadius: '0.8rem',
+  p: 4,
+  height: '57vh',
+  ':focus-visible': {
+    outline: 'none',
+  },
+}
 export default function AuthHeader(): React.JSX.Element {
   const dispatch = useAppDispatch()
   const userDetails = LoggedInUserDetails()
+  const [open, setOpen] = React.useState(false)
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -64,6 +79,12 @@ export default function AuthHeader(): React.JSX.Element {
     setMobileMoreAnchorEl(event.currentTarget)
   }
 
+  const handleOpen = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
+  }
   const menuId = 'primary-search-account-menu'
   const renderMenu = (
     <Menu
@@ -149,8 +170,8 @@ export default function AuthHeader(): React.JSX.Element {
         Account
       </Typography>
       <Typography sx={{fontSize: '14px'}}>
-        <Link href="/coming-soon" className="dropdown-menu">
-          Settings & Privacy
+        <Link href="#" onClick={handleOpen} className="dropdown-menu">
+          Reset Password
         </Link>
       </Typography>
       <Typography sx={{fontSize: '14px', marginTop: '6px'}}>
@@ -309,6 +330,7 @@ export default function AuthHeader(): React.JSX.Element {
               <SearchBox
                 onFocusedInput={onFocusedInput}
                 openBackdrop={openBackdrop}
+                handleCloseBackdrop={handleCloseBackdrop}
               />
               <Box sx={{flexGrow: 1}} />
               <Box sx={{display: {xs: 'none', md: 'flex', gap: '13px'}}}>
@@ -373,7 +395,13 @@ export default function AuthHeader(): React.JSX.Element {
                   aria-haspopup="true"
                   onClick={handleProfileMenuOpen}
                   color="inherit">
-                  <AccountCircle />
+                  {/* <AccountCircle /> */}
+                  <Image
+                    src={DefaultUserImg}
+                    height={25}
+                    width={25}
+                    alt="user_profile"
+                  />
                   <Typography variant="h5">Me</Typography>
                 </IconButton>
               </Box>
@@ -387,7 +415,12 @@ export default function AuthHeader(): React.JSX.Element {
                   aria-haspopup="true"
                   onClick={handleProfileMenuOpen}
                   color="inherit">
-                  <AccountCircle />
+                  <Image
+                    src={DefaultUserImg}
+                    height={25}
+                    width={25}
+                    alt="user_profile"
+                  />{' '}
                   <Typography variant="h5">Me</Typography>
                 </IconButton>
                 <IconButton
@@ -407,6 +440,17 @@ export default function AuthHeader(): React.JSX.Element {
           {renderMenu}
         </Box>
       </Box>
+      <Modal
+        className="create_post_modal"
+        open={open}
+        disableScrollLock={true}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <ForgetPassword />
+        </Box>
+      </Modal>
     </>
   )
 }

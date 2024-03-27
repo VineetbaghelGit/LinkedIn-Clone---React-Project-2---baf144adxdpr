@@ -33,6 +33,7 @@ function CommentBox({
   const [commentInputValue, setCommentInputValue] = useState('')
   const [commentEditMode, setCommentEditMode] = useState(false)
   const [currentCommentId, setCurrentCommentId] = useState('')
+  console.log('🚀 ~ currentCommentId:', currentCommentId)
   const [numberOfDisplayComment, setNumberOfDisplayComment] =
     useState<number>(5)
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -99,7 +100,31 @@ function CommentBox({
     try {
       await ApiUtils.deleteComment(`/${commentId}`)
       ToasterMessage('success', 'Comment deleted successfully')
+      if (commentId === currentCommentId) {
+        setCommentInputValue('')
+        setCommentEditMode(prv => !prv)
+        setCurrentCommentId('')
+      }
       void fetchCommentsForPost(contentId)
+      if (isSinglePostComment) {
+        const updatedContent = {
+          ...feedContent,
+          commentCount: feedContent.commentCount - 1,
+        }
+        setFeedContent(updatedContent)
+      } else {
+        const updatedFeedContent = feedContent.map((newPost: any) => {
+          if (newPost._id === contentId) {
+            return {
+              ...newPost,
+              commentCount: newPost.commentCount - 1,
+            }
+          }
+          return newPost
+        })
+
+        setFeedContent(updatedFeedContent)
+      }
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
     }
@@ -156,7 +181,7 @@ function CommentBox({
           />
         </Box>
       </Box>
-      {commentInputValue.length > 0 && (
+      {commentInputValue.trim().length > 0 && (
         <Button
           variant="contained"
           onClick={handlePostComment}

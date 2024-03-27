@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable arrow-parens */
 /* eslint-disable prettier/prettier */
 /* eslint-disable quote-props */
@@ -18,8 +19,23 @@ import GuestLayout from '@/components/appLayouts/GuestLayout'
 import ApiUtils from '@/components/apis/ApiUtils'
 import {ToasterMessage} from '@/components/helpers/ToastMessage'
 import {useRouter} from 'next/navigation'
+import {setCookie} from 'cookies-next'
+import {
+  USER_DETAILS,
+  USER_ID,
+  USER_TOKEN,
+  regex,
+} from '@/components/utils/AppConfig'
+import {setLoginToken} from '@/components/store/slices/auth/reducer'
+
+import {useAppDispatch} from '@/components/store/hooks'
+import {
+  setLoggedInUserDetails,
+  setLoggedInUserId,
+} from '@/components/store/slices/user/reducer'
 function SignupPage(): React.JSX.Element {
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const signupValidation = useFormik({
     initialValues: {
@@ -29,16 +45,29 @@ function SignupPage(): React.JSX.Element {
       appType: 'linkedin',
     },
     validationSchema: Yup.object().shape({
-      name: Yup.string().required('Name is required'),
-      email: Yup.string().required('Email is required'),
-      password: Yup.string().required('Password is required'),
+      name: Yup.string()
+        .required('Name is required')
+        .min(5, 'Name must be at least 5 characters long'),
+      email: Yup.string().email('Invalid email').required('Email is required'),
+      password: Yup.string()
+        .required('Please Enter Your Password')
+        .matches(
+          regex.passwordRegex,
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
+        ),
     }),
     onSubmit: async values => {
       try {
-        await ApiUtils.authSignup(values)
-        ToasterMessage('success', 'Signup Successfully')
+        const response: any = await ApiUtils.authSignup(values)
+        setCookie(USER_TOKEN, JSON.stringify(response?.token))
+        setCookie(USER_ID, JSON.stringify(response?.data?.user?._id))
+        setCookie(USER_DETAILS, JSON.stringify(response?.data?.user))
+        dispatch(setLoginToken(response?.token))
+        dispatch(setLoggedInUserId(response?.data?.user?._id))
+        dispatch(setLoggedInUserDetails(response?.data?.user))
+        router.push('/')
+        ToasterMessage('success', 'Login Successfully')
         signupValidation.resetForm()
-        router.push('/login')
       } catch (err: any) {
         ToasterMessage('error', err?.response?.data?.message)
       }
@@ -181,6 +210,7 @@ function SignupPage(): React.JSX.Element {
               <Button
                 variant="contained"
                 type="submit"
+                disabled={Object.keys(signupValidation.errors).length !== 0}
                 sx={{
                   height: '52px',
                   overflow: 'hidden',

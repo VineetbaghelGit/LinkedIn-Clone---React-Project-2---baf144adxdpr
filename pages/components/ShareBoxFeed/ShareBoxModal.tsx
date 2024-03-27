@@ -57,6 +57,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
     postDetails?.content ?? '',
   )
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
+  const [loader, setLoader] = useState(false)
   const [inputTitle, setInputTitle] = React.useState('')
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
   const [imagePreviews, setImagePreviews] = useState<string[]>(
@@ -140,6 +141,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
   const handleCreatePost = async (): Promise<void> => {
     if (inputValue != null) {
       try {
+        setLoader(true)
         const formData = new FormData()
         selectedFiles.forEach(file => {
           formData.append(`images`, file)
@@ -156,6 +158,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
         setInputTitle('')
         setSelectedFiles([])
         setImagePreviews([])
+        setLoader(false)
       } catch (err: any) {
         ToasterMessage('error', err.response.data.message)
       }
@@ -228,7 +231,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
                     textTransform: 'capitalize',
                     whiteSpace: 'nowrap',
                     fontSize: '12px',
-                    marginLeft: '-23px',
+                    marginLeft: '0.8rem',
                   }}>
                   Post to Anyone
                 </Box>
@@ -449,7 +452,7 @@ const ShareBoxModal: React.FC<ShareModalProps> = ({
               justifyContent: 'flex-end',
             }}>
             <Button
-              disabled={!(inputValue.length > 0)}
+              disabled={loader || !(inputValue.length > 0)}
               variant="contained"
               onClick={handleCreatePost}
               sx={{

@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-import GuestHeader from '@/components/shared/GuestHeader'
+import AuthHeader from '@/components/shared/AuthHeader'
 import {Button} from '@mui/material'
 import Link from 'next/link'
 import React from 'react'
@@ -7,7 +7,7 @@ import React from 'react'
 function Index(): React.JSX.Element {
   return (
     <div>
-      <GuestHeader />
+      <AuthHeader />
       <div className="coming-soon-wrapper">
         <h1>
           Coming soon<span className="dot">.</span>
