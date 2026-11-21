@@ -33,7 +33,6 @@ function CommentBox({
   const [commentInputValue, setCommentInputValue] = useState('')
   const [commentEditMode, setCommentEditMode] = useState(false)
   const [currentCommentId, setCurrentCommentId] = useState('')
-  console.log('🚀 ~ currentCommentId:', currentCommentId)
   const [numberOfDisplayComment, setNumberOfDisplayComment] =
     useState<number>(5)
   const inputRef = useRef<HTMLInputElement | null>(null)

@@ -14,7 +14,6 @@ import LeftSideSinglePost from '../../components/SinglePostFeed/LeftSideSinglePo
 function SinglePost(): React.JSX.Element {
   const id = useParams()
   const [feedContent, setFeedContent] = useState<any>(null)
-  console.log('🚀 ~ SinglePost ~ feedContent:', feedContent)
   async function fetchPostById(postId: string): Promise<void> {
     try {
       const response: any = await ApiUtils.postById(`/${postId}`)

@@ -9,8 +9,15 @@ import CardContent from '@mui/material/CardContent'
 import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import {Box, CardHeader} from '@mui/material'
-// import MoreIcon from '@mui/icons-material/MoreVert'
+import {
+  Box,
+  CardActions,
+  CardHeader,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@mui/material'
+import MoreIcon from '@mui/icons-material/MoreVert'
 
 import Image from 'next/image'
 import CreateGrpModal from './CreateGrpModal'
@@ -28,35 +35,38 @@ interface GroupData {
 function GroupsList(): React.JSX.Element {
   const [open, setOpen] = React.useState(false)
   const [groupListData, setGroupListData] = useState<GroupData[]>([])
-  console.log('🚀 ~ GroupsList ~ groupListData:', groupListData)
+  const [selectedGroup, setSelectedGroup] = useState('')
   const handleOpen = (): void => {
     setOpen(true)
   }
   const handleClose = (): void => {
     setOpen(false)
   }
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-  //   React.useState<null | HTMLElement>(null)
-  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-  // const mobileMenuId = 'primary-search-account-menu-mobile'
-  // const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-  //   setMobileMoreAnchorEl(event.currentTarget)
-  // }
-  // const handleMobileMenuClose = (): void => {
-  //   setMobileMoreAnchorEl(null)
-  // }
+  const handleMobileMenuOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    id: string,
+  ): void => {
+    setSelectedGroup(id)
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
+  const handleMobileMenuClose = (): void => {
+    setMobileMoreAnchorEl(null)
+  }
 
-  // const deleteGroup = async (groupId: string): Promise<void> => {
-  //   try {
-  //     await ApiUtils.deleteGroup(`/${groupId}`)
-  //     setMobileMoreAnchorEl(null)
-  //     ToasterMessage('success', 'Group deleted successfully')
-  //     void fetchGroupList()
-  //   } catch (err: any) {
-  //     ToasterMessage('error', err?.response?.data.message)
-  //   }
-  // }
+  const deleteGroup = async (groupId: string): Promise<void> => {
+    try {
+      await ApiUtils.deleteGroup(`/${groupId}`)
+      setMobileMoreAnchorEl(null)
+      ToasterMessage('success', 'Group deleted successfully')
+      void fetchGroupList()
+    } catch (err: any) {
+      ToasterMessage('error', err?.response?.data.message)
+    }
+  }
   useEffect(() => {
     void fetchGroupList()
   }, [])
@@ -126,20 +136,22 @@ function GroupsList(): React.JSX.Element {
                       }}>
                       {data?.name}
                     </Typography>
-                    {/* <CardActions>
+                    <CardActions>
                       <IconButton
                         size="large"
                         aria-label="show more"
                         aria-haspopup="true"
-                        onClick={handleMobileMenuOpen}
+                        onClick={e => {
+                          handleMobileMenuOpen(e, data?._id)
+                        }}
                         className="header_more_icon"
                         color="inherit">
                         <MoreIcon />
                       </IconButton>{' '}
-                    </CardActions> */}
+                    </CardActions>
                   </Box>
                 </Box>
-                {/* <Menu
+                <Menu
                   anchorEl={mobileMoreAnchorEl}
                   anchorOrigin={{
                     vertical: 'top',
@@ -152,19 +164,19 @@ function GroupsList(): React.JSX.Element {
                   }}
                   open={isMobileMenuOpen}
                   onClose={handleMobileMenuClose}>
-                  <MenuItem>
+                  {/* <MenuItem>
                     <Typography sx={{fontSize: '13px'}}>View Group</Typography>
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem>
                     <Typography
                       sx={{fontSize: '13px'}}
                       onClick={() => {
-                        void deleteGroup(data?._id)
+                        void deleteGroup(selectedGroup)
                       }}>
                       Delete
                     </Typography>
                   </MenuItem>
-                </Menu> */}
+                </Menu>
               </Box>
             ))
           : 'No data'}

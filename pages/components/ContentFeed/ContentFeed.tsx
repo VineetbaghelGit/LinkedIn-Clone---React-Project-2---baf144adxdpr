@@ -13,6 +13,7 @@ import DefaultUserImg from '@/components/images/default_user_placeholder.jpg'
 import Link from 'next/link'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import CommentIcon from '@mui/icons-material/Comment'
+import MoreIcon from '@mui/icons-material/MoreVert'
 import SendIcon from '@mui/icons-material/Send'
 import ReplyAllIcon from '@mui/icons-material/ReplyAll'
 import {formatRelativeTime} from '@/components/helpers/TimeFomat'
@@ -43,6 +44,7 @@ function ContentFeed({
   const [showMoreStates, setShowMoreStates] = useState<Record<string, boolean>>(
     {},
   )
+  const [selectedPostId, setSelectedPostId] = useState('')
   const [showCommentsStates, setShowCommentsStates] = useState<
     Record<string, boolean>
   >({})
@@ -50,10 +52,14 @@ function ContentFeed({
     React.useState<null | HTMLElement>(null)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   // const [postDetails, setPostDetails] = useState<PostTypes>()
-  const mobileMenuId = 'primary-search-account-menu-mobile'
-  // const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-  //   setMobileMoreAnchorEl(event.currentTarget)
-  // }
+  // const mobileMenuId = 'primary-search-account-menu-mobile'
+  const handleMobileMenuOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    id: string,
+  ): void => {
+    setSelectedPostId(id)
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
   const handleMobileMenuClose = (): void => {
     setMobileMoreAnchorEl(null)
   }
@@ -92,19 +98,19 @@ function ContentFeed({
     try {
       await ApiUtils.deletePost(`/${postId}`)
       ToasterMessage('success', 'Post deleted successfully')
-      const getPostResponse: any = await ApiUtils.getPosts(
-        `?limit=10&page=${index - 1}`,
+      const updatedFeedContent = feedContent.filter(
+        (newPost: any) => newPost._id !== postId,
       )
-      setFeedContent(prevItems => [...prevItems, ...getPostResponse.data])
+      setFeedContent(updatedFeedContent)
     } catch (err: any) {
       ToasterMessage('error', err?.response?.data.message)
     }
   }
-  const openEditPostModal = (post: PostTypes): void => {
-    console.log('🚀 ~ openEditPostModal ~ post:', post)
-    // setPostDetails(post)
-    // handleOpen()
-  }
+  // const openEditPostModal = (post: PostTypes): void => {
+  //   console.log('🚀 ~ openEditPostModal ~ post:', post)
+  //   // setPostDetails(post)
+  //   // handleOpen()
+  // }
   return (
     <>
       {feedContent?.length > 0
@@ -134,15 +140,15 @@ function ContentFeed({
                     justifyContent: 'space-between',
                   }}
                   className="content_feed_header">
-                  {/* <Box component="span" sx={{fontSize: '14px'}}>
-                    {content?.title}
-                  </Box> */}
-                  {/* <MoreIcon
+                  <Box component="span" sx={{fontSize: '14px'}}>
+                    {/* {content?.title} */}
+                  </Box>
+                  <MoreIcon
                     sx={{fontSize: '16px', cursor: 'pointer'}}
                     onClick={(e: any) => {
-                      handleMobileMenuOpen(e)
+                      handleMobileMenuOpen(e, content?._id)
                     }}
-                  /> */}
+                  />
                 </Box>
                 <Menu
                   anchorEl={mobileMoreAnchorEl}
@@ -150,7 +156,6 @@ function ContentFeed({
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  id={mobileMenuId}
                   keepMounted
                   transformOrigin={{
                     vertical: 'top',
@@ -158,20 +163,20 @@ function ContentFeed({
                   }}
                   open={isMobileMenuOpen}
                   onClose={handleMobileMenuClose}>
-                  <MenuItem>
+                  {/* <MenuItem>
                     <Typography
                       component="a"
                       sx={{fontSize: '13px'}}
                       onClick={() => openEditPostModal(content)}>
                       Edit Post
                     </Typography>
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem>
                     <Typography
                       component="a"
                       sx={{fontSize: '13px'}}
                       onClick={async () =>
-                        await handleDeletePost(content?._id)
+                        await handleDeletePost(selectedPostId)
                       }>
                       Delete
                     </Typography>
